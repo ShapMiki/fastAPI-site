@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 
 from cars.router import router as cars_router
 from users.router import router as users_router
@@ -15,12 +16,18 @@ from images.router import router as images_router
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 
 #Подключение роутеров
 app.include_router(users_router)
 app.include_router(cars_router)
 app.include_router(pages_router)
 app.include_router(images_router)
+
+
+@app.get("/")
+def read_root():
+    return RedirectResponse(url="/pages/")
 
 origins = [
     "http://localhost",
@@ -57,9 +64,9 @@ def pipl(book: SBooking):
 @app.get('/popas/{popas_id}')
 def get_popka(popas_id: int, kaktus: int,  stars: Optional[int] = Query(None, ge=0, le=5)):
     return f"Popas {popas_id} - {kaktus} \n {stars}"
-
 @app.get('/pop')
 def get_poka():
     return f"Popas"
 """
+
 

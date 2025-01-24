@@ -1,6 +1,30 @@
 from dao.base import BaseDAO
-from users.models import User
+from modules.database import async_session_maker
+from users.models import Users
+from sqlalchemy import select, insert
+
 
 class UsersDAO(BaseDAO):
-    model = User
+    model = Users
 
+    @classmethod
+    async def update_balance(cls, id, balance):
+        async with async_session_maker() as session:
+            query = insert(cls.model).values(balance=balance).where(cls.model.id == id)
+            await session.execute(query)
+            await session.commit()
+
+    @classmethod
+    async def update_one(cls, id, **kwargs):
+        async with async_session_maker() as session:
+            query = cls.model.__table__.update().values(**kwargs).where(cls.model.id == id)
+            await session.execute(query)
+            await session.commit()
+
+    @staticmethod
+    async def add_one(email: str, name: str, password: str, surname: str = None):
+        async with async_session_maker() as session:
+            new_user = Users(email=email, name=name, password=password, surname=surname)
+            session.add(new_user)
+            await session.commit()
+            return new_user

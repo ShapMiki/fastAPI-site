@@ -10,37 +10,41 @@ def get_token(request: Request):
     token = request.cookies.get("user_access_token")
 
     if not token:
-        raise HTTPException(status_code=401)
+        print("Token not")
+        return None
 
     return token
 
 
 
 async def get_current_user(token: str = Depends(get_token)):
+
+    if not token:
+        return None
+
     try:
         payload = jwt.decode(
             token, SECRET_KEY, algorithms=[ALGORITHM]
         )
     except JWTError as e:
-        raise e
         print("Token error")
-        raise HTTPException(status_code=401)
+        return None
 
     expire: str = payload.get("exp")
 
     if not expire or (int(expire) < datetime.utcnow().timestamp()):
         print("Token expired")
-        raise HTTPException(status_code=401)
+        return None
 
 
     user_id: int = payload.get("sub")
     if not user_id:
         print("User id not")
-        raise HTTPException(status_code=401)
+        return None
 
     user = await UsersDAO.find_by_id(int(user_id))
     if not user:
         print("User not")
-        raise HTTPException(status_code=401)
+        return None
 
     return user

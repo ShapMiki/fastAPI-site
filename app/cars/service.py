@@ -1,4 +1,4 @@
-from modules.database import async_session_maker
+"""from modules.database import async_session_maker
 from sqlalchemy.sql import select
 
 from cars.models import Car
@@ -14,4 +14,4 @@ class CarService(BaseService):
         async with async_session_maker() as session:
             query = select(Car).filter_by(car_number=number)
             cars = await session.execute(query)
-            return cars.scalar_one_or_none()
+            return cars.scalar_one_or_none()"""

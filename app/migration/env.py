@@ -12,8 +12,8 @@ sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 
 
 from modules.database import Base, DATABASE_URL
-from users.models import User
-from cars.models import Car
+from users.models import Users
+from cars.models import PropertyCars, ActivCars
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

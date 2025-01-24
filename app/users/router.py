@@ -1,6 +1,13 @@
-from fastapi import APIRouter, Response, Depends, Request
+from fastapi import APIRouter, Response, Depends, Request, Body
 
-from users.schemas import SUser, SUserLogin
+###########
+from fastapi import  Form, File, UploadFile
+from typing import Optional
+
+
+from fastapi.responses import RedirectResponse
+
+from users.schemas import *
 from users.dao import UsersDAO
 from users.auth import get_password_hash, verify_password, authenticate_user, create_access_token
 from users.dependencies import get_current_user
@@ -14,16 +21,16 @@ router = APIRouter(
 
 
 @router.post("/register_api")
-async def register(responce: Response, user_data: SUser):
-    existing_user = await UsersDAO.find_one_or_none(email=user_data.email)
-    existing_user_passport_number = await UsersDAO.find_one_or_none(passport_number=user_data.passport_number)
+async def register(responce: Response, user_data: SUserRegistrate):
 
-    if existing_user or existing_user_passport_number:
+    existing_user = await UsersDAO.find_one_or_none(email=user_data.email)
+
+    if existing_user:
         raise IncorrectEmailOrPassword
 
     hashed_password = get_password_hash(user_data.password)
 
-    await UsersDAO.add_one(email=user_data.email, name=user_data.name, password=hashed_password, passport_number=user_data.passport_number)
+    await UsersDAO.add_one(email=user_data.email, name=user_data.name, password=hashed_password, surname=user_data.surname)
 
     user = await UsersDAO.find_one_or_none(email=user_data.email)
     access_token = create_access_token(data={"sub": str(user.id)})
@@ -41,8 +48,24 @@ async def login(responce: Response, user_data: SUserLogin):
 
 
 @router.post("/logout_api")
-async def logout(responce: Response):
-    responce.delete_cookie(key="user_access_token")
+async def logout(response: Response):
+    return response.delete_cookie(key="user_access_token", path="/")
+
+"""
+@router.get("/logout_api")
+async def logout(response: Response):
+    return RedirectResponse(url="/", status_code=302)"""
+
+
+
+@router.post('/update_user_info_api')
+async def update_user_info(user_update: SUserUpdate = Body(...), user: SUser = Depends(get_current_user)):
+    print(user_update.name, '\n')
+    print(user_update.surname, '\n')
+    print(user_update.telephone, '\n')
+    print(user_update.description, '\n', '\n', '\n')
+
+    await UsersDAO.update_one(user.id, **user_update.dict())
 
 
 
