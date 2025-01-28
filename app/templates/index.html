@@ -33,7 +33,7 @@
                 <div class="col-md-10 col-lg-8 col-xl-7 mx-auto position-relative">
                     <form>
                         <div class="row">
-                            <div class="col"><code>{% if not data.user_data %}</code><a class="btn btn-primary ms-auto" role="button" href="/pages/registrate" style="width: 210.531px;font-size: 21px;height: 48.5px;">Регистрация</a><code>{% endif %}</code></div>
+                            <div class="col"><code>{% if not data.user_data %}</code><a class="btn btn-primary ms-auto" role="button" href="/pages/registrate" style="width: 210.531px;font-size: 21px;height: 48.5px;">Регистрация</a><code>{% else %}</code><a class="btn btn-primary ms-auto" role="button" href="/pages/actions" style="width: 210.531px;font-size: 21px;height: 48.5px;">Торговать</a><code>{% endif %}</code></div>
                         </div>
                     </form>
                 </div>
@@ -73,14 +73,7 @@
                 <div class="col-lg-6 text-white order-lg-2 showcase-img" style="background-image: url(&quot;/assets/img/f2759044ba514d498f148323d85c43ab.jpg&quot;);"><span></span></div>
                 <div class="col-lg-6 my-auto order-lg-1 showcase-text">
                     <h2>Аукционы автомобилей</h2>
-                    <p class="lead mb-0">Находите подходящий для себя автомобиль, принимайте участие и забирайте свою мечту!</p><a class="btn btn-primary align-items-center align-content-center align-self-center ms-auto" role="button" href="/pages/actions/car" style="transform: translate(176px) translateX(-20px) translateY(20px);">Участвовать</a>
-                </div>
-            </div>
-            <div class="row g-0">
-                <div class="col-lg-6 text-white showcase-img pt-5 mt-0" style="background-image: url(&quot;/assets/img/avto-nomer-belarus.png&quot;);transform: translate(-118px) translateX(127px) translateY(4px) scale(0.98) skew(0deg);"><span></span></div>
-                <div class="col-lg-6 my-auto order-lg-1 showcase-text">
-                    <h2>Аукционы гос номеров</h2>
-                    <p class="lead mb-0">Устали от своих номеров? Хотите, чтобы на вашей машине был не рандомный набор символов от ГАИ, а красивое сочетание? Тогда вам точно стоит сюда заглянуть!&nbsp;</p><a class="btn btn-primary align-items-center align-content-center align-self-center ms-auto" role="button" href="/pages/actions/gos_numbers" style="transform: translate(176px) translateX(-20px) translateY(20px);">Участвовать</a>
+                    <p class="lead mb-0">Находите подходящий для себя автомобиль, принимайте участие и забирайте свою мечту!</p><a class="btn btn-primary align-items-center align-content-center align-self-center ms-auto" role="button" href="/pages/actions" style="transform: translate(176px) translateX(-20px) translateY(20px);">Участвовать</a>
                 </div>
             </div>
         </div>

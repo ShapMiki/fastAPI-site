@@ -1,16 +1,16 @@
 from dao.base import BaseDAO
 from modules.database import async_session_maker
 from users.models import Users
-from sqlalchemy import select, insert
+from sqlalchemy import select, insert, update
 
 
 class UsersDAO(BaseDAO):
     model = Users
 
     @classmethod
-    async def update_balance(cls, id, balance):
+    async def update_balance(cls, id, ballance):
         async with async_session_maker() as session:
-            query = insert(cls.model).values(balance=balance).where(cls.model.id == id)
+            query = update(cls.model).values(ballance=ballance).where(cls.model.id == id)
             await session.execute(query)
             await session.commit()
 

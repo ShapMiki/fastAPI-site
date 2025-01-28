@@ -1,8 +1,8 @@
 from dao.base import BaseDAO
 from modules.database import async_session_maker
 from cars.models import PropertyCars, ActivCars
-from  sqlalchemy import select, insert
-
+from sqlalchemy import select, insert
+from datetime import datetime
 
 class ActivCarsDAO(BaseDAO):
     model = ActivCars
@@ -25,17 +25,20 @@ class ActivCarsDAO(BaseDAO):
                 await session.commit()
             return obj
 
-    """@classmethod
-    async def change_space(cls, id, space, value):
+    @classmethod
+    async def update_one_by_obj(cls, obj):
         async with async_session_maker() as session:
-            query = select(cls.model).filter_by(id=id)
-            result = await session.execute(query)
-            obj = result.scalar_one_or_none()
-            if obj:
-                setattr(obj, space, value)
+            async with session.begin():
+                await session.merge(obj)
                 await session.commit()
-            return obj"""
+                return obj
 
+    @classmethod
+    async def end_date_comparison(cls):
+        async with async_session_maker() as session:
+            query = select(cls.model).where(cls.model.end_date < datetime.now())
+            result = await session.execute(query)
+            return result.scalars().all()
 
 class PropertyCarsDAO(BaseDAO):
 

@@ -18,7 +18,7 @@
     <nav class="navbar navbar-expand bg-light">
         <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"></button>
             <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-2" style="position: static;">
-                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}} р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages">Торговать</a></div>
+                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}} р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/actions">Торговать</a></div>
             </div>
         </div>
     </nav>
@@ -34,7 +34,7 @@
     <section class="position-relative py-4 py-xl-5" style="padding-left: 140px;">
         <div class="container">
             <div style="display: inline-flex;">
-                <div><img width="300" height="300" style="width: 300px;height: 300px;margin-right: 0px;" src="{{data.user_data.image_scr}}"></div>
+                <div><img width="300" height="300" style="width: 300px;height: 300px;margin-right: 0px;" src="data:image/jpeg;base64,{{ data.user_data.image_base64 }}"></div>
             </div>
         </div>
     </section>
@@ -45,7 +45,7 @@
             <div style="display: flex;margin-bottom: 10px;"><strong style="font-size: 20px;margin-bottom: 0px;margin-left: 40px;">Фамилия:&nbsp;</strong><input class="form-control" type="text" style="width: 631.609px;margin-left: 27px;" name="surname" placeholder="{{data.user_data.surname}}" required="" value="{{data.user_data.surname}}"></div>
             <div style="display: flex;margin-bottom: 10px;"><strong style="font-size: 20px;margin-bottom: 0px;margin-left: 40px;">Номер телефона:&nbsp;</strong><input class="form-control" type="text" style="width: 631.609px;margin-left: 27px;" name="telephone" placeholder="{{data.user_data.telephone}}" value="{{data.user_data.telephone}}"></div>
             <div style="display: block;margin-top: 26px;margin-bottom: 65px;"><strong style="font-size: 20px;margin-bottom: 0px;margin-left: 20px;margin-top: 0px;">Описание&nbsp;</strong><input class="form-control" type="text" style="width: 788.609px;margin-left: 40px;height: 200px;" name="description" placeholder="{{data.user_data.description}}" required="" value="{{data.user_data.description}}"></div>
-            <div style="display: flex;margin-bottom: 10px;margin-top: 30px;margin-left: 40px;"><button class="btn btn-primary" type="submit" style="margin-right: 0px;" onclick="submitForm()">Обновить информацию</button></div>
+            <div style="display: flex;margin-bottom: 10px;margin-top: 30px;margin-left: 40px;"><button class="btn btn-primary" type="button" style="margin-right: 0px;" onclick="submitForm_and_foto()">Обновить информацию</button></div>
         </form>
     </section>
     <section class="position-relative py-4 py-xl-5">

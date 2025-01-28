@@ -36,8 +36,8 @@ class SActivCars(BaseModel):
     current_price: Optional[float] = None
     buy_price: Optional[float] = None
     price_step: Optional[float] = None
-    start_date: Optional[date] = None
-    end_date: Optional[date] = None
+    start_date: Optional[datetime] = None
+    end_date: Optional[datetime] = None
     registration: Optional[str] = None
     images: str = '[]'
 
@@ -50,7 +50,7 @@ class SPropertyCars(BaseModel):
     ltype: str
     name: str
     description: str
-    owner: str
+    owner: int
     brand: Optional[str] = None
     model: Optional[str] = None
     body: Optional[str] = None
@@ -92,8 +92,11 @@ class SUpLoadActivCars(BaseModel):
     buy_price: Optional[float] = Field(default=0, ge=0)
     price_step: Optional[float] = Field(default=1)
 
-    start_date: Optional[date] = Field(default=datetime.utcnow())
-    end_date: Optional[date] = Field(default=(datetime.utcnow() + timedelta(days=1)).date())
+    start_date: Optional[datetime] = Field(default_factory=datetime.utcnow)
+    start_time: Optional[str] = Field(default="00:00:00")
+    end_date: Optional[datetime] = Field(default_factory=lambda: datetime.utcnow() + timedelta(days=1))
+    end_time: Optional[str] = Field(default="01:00:00")
+
     registration: Optional[str] = Field(default="Не указано")
     images: str = Field(default='[]')
 
@@ -114,6 +117,8 @@ class SUpLoadActivCars(BaseModel):
         if isinstance(value, str):
             try:
                 value = float(value)
+                if value < 0:
+                    value = -value
             except ValueError:
                 value = None
         return value
@@ -125,14 +130,47 @@ class SUpLoadActivCars(BaseModel):
         return value
 
     @model_validator(mode='after')
-    def check_start_date(cls, values):
-        if values.start_date and values.start_date < datetime.utcnow().date():
-            values.start_date = datetime.utcnow().date()
-        if values.end_date and values.end_date < values.start_date:
+    def combine_date_time(cls, values):
+        if values.start_date and values.start_time:
+            values.start_date = datetime.combine(values.start_date,
+                                                 datetime.strptime(values.start_time, '%H:%M').time())
+        elif values.start_time:
+            values.start_date = datetime.utcnow()
+            values.start_date = datetime.combine(values.start_date, datetime.strptime(values.start_time, '%H:%M').time())
+        elif not values.start_date:
+            values.start_date = datetime.utcnow()
+
+        if values.end_date and values.end_time:
+            values.end_date = datetime.combine(values.end_date, datetime.strptime(values.end_time, '%H:%M').time())
+        elif values.end_time:
             values.end_date = values.start_date + timedelta(days=1)
-        if (values.end_date - values.start_date).days > 31:
-            values.end_date = values.start_date + relativedelta(months=1)
+            values.end_date = datetime.combine(values.end_date, datetime.strptime(values.end_time, '%H:%M').time())
+        elif not values.end_date:
+            values.end_date = values.start_date + timedelta(days=1)
+
+        if values.start_date:
+            if values.start_date < datetime.utcnow():
+                values.start_date = datetime.utcnow()
+
+        if values.end_date:
+            if values.end_date < datetime.utcnow():
+                values.end_date = datetime.utcnow() + timedelta(days=1)
+
+        if values.start_date and values.end_date:
+            if values.end_date < values.start_date:
+                values.end_date = values.start_date + timedelta(days=1)
+            if (values.end_date - values.start_date).days > 31:
+                values.end_date = values.start_date + timedelta(days=31)
+
+        del values.start_time
+        del values.end_time
+
+        if values.buy_price and values.start_price:
+            if values.start_price > values.buy_price:
+                values.buy_price = 0
+
         return values
+
 
     class Config:
         orm_mode = True
@@ -141,5 +179,4 @@ class SUpLoadActivCars(BaseModel):
 
 
 class SUppPrice(BaseModel):
-    car_id: int
     price: float

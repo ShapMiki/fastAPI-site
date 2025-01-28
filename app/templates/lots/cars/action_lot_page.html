@@ -61,22 +61,19 @@
     </section>
     <section class="position-relative py-4 py-xl-5">
         <div class="container">
-            <div style="display: grid;margin-left: 40px;"><strong style="font-size: 20px;margin-bottom: 10px;">Марка: {{data.activ_lot_data.brand}}</strong><strong style="font-size: 20px;margin-bottom: 10px;">Модель: {{data.activ_lot_data.model}}</strong><strong style="font-size: 20px;">Кузов: {{data.activ_lot_data.body}}</strong></div>
-            <div style="margin-top: 60px;margin-bottom: 40px;margin-left: 20px;"><strong style="font-size: 20px;margin-bottom: 0px;">Описание: {{data.activ_lot_data.description}}</strong></div>
-            <div class="d-flex" style="margin-left: 40px;">
-                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Тип двигателя: {{data.activ_lot_data.fuel_type}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Обьем Двигателя: {{data.activ_lot_data.engine_volume}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Мощность: {{data.activ_lot_data.power}} лс.</strong><strong style="font-size: 20px;margin-bottom: 0px;">Описание: {{data.activ_lot_data.description}}</strong></div>
-                <div class="d-grid" style="margin-left: 40px;"><strong style="font-size: 20px;margin-bottom: 0px;">Год: {{data.activ_lot_data.year}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Пробег: {{data.activ_lot_data.range}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Тип коробки: {{data.activ_lot_data.gear_type}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Регистрация: {{data.activ_lot_data.registration}}</strong></div>
+            <div style="display: grid;margin-left: 40px;margin-bottom: 40px;"><strong style="font-size: 20px;margin-bottom: 10px;">Марка:<small><strong>&nbsp;{{data.activ_lot_data.brand}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 10px;">Модель:<small><strong>&nbsp;{{data.activ_lot_data.model}}</strong></small></strong><strong style="font-size: 20px;">Кузов:&nbsp;<small><strong>&nbsp;{{data.activ_lot_data.body}}</strong></small></strong></div>
+            <div class="d-grid d-print-grid d-sm-grid d-md-grid d-lg-flex d-xl-flex d-xxl-flex" style="margin-left: 40px;">
+                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Тип двигателя:<small><strong>&nbsp;{{data.activ_lot_data.fuel_type}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Обьем Двигателя:<small><strong>&nbsp;{{data.activ_lot_data.engine_volume}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Мощность:&nbsp;<small><strong>&nbsp;{{data.activ_lot_data.power}} лс.</strong></small></strong></div>
+                <div class="d-grid" style="margin-left: 40px;"><strong style="font-size: 20px;margin-bottom: 0px;">Год:&nbsp;<small><strong>&nbsp;{{data.activ_lot_data.year}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Пробег:<small><strong>&nbsp;{{data.activ_lot_data.range}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Тип коробки:<small><strong>&nbsp;{{data.activ_lot_data.gear_type}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Регистрация:<small><strong>{{data.activ_lot_data.registration}}</strong></small></strong></div>
             </div>
-            <div class="d-flex" style="margin-left: 40px;margin-top: 40px;height: 120px;">
-                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Владелец: {{data.another_data.owner}}</strong></div>
-            </div>
-            <div></div>
+            <div class="d-flex" style="margin-left: 40px;margin-top: 40px;height: 14px;"><strong style="font-size: 20px;margin-bottom: 0px;">Владелец:&nbsp;<small><strong>&nbsp;{{data.another_data.owner}}</strong></small></strong></div>
         </div>
     </section>
+    <div class="container" style="display: grid;margin-bottom: 20px;"><strong style="font-size: 20px;margin-bottom: 0px;">Описание:</strong><small><strong>&nbsp;{{data.activ_lot_data.description}}</strong></small></div>
     <section class="position-relative py-4 py-xl-5">
         <div class="container">
             <div class="d-flex" style="margin-left: 40px;">
-                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Текущий лидер: {{data.activ_lot_data.current_owner}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Дата начала аукциона: {{data.activ_lot_data.start_date}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Дата конца аукциона: {{data.activ_lot_data.end_date}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Начальная цена: {{data.activ_lot_data.start_price}}</strong></div>
+                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Текущий лидер:<small><strong>&nbsp; {{data.activ_lot_data.current_owner}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Дата начала аукциона:<small><strong>&nbsp;{{data.activ_lot_data.start_date}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Дата конца аукциона:<small><strong>&nbsp;{{data.activ_lot_data.end_date}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;width: 657.047px;display: block;">Начальная цена:&nbsp;<small><strong>&nbsp;{{data.activ_lot_data.start_price}}</strong></small></strong></div>
             </div>
             <div class="d-flex" style="margin-left: 40px;margin-top: 40px;height: 120px;">
                 <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Владелец: {{data.another_data.owner}}</strong></div>
@@ -87,13 +84,13 @@
     <section class="justify-content-center align-items-center align-content-center align-self-center position-relative py-5">
         <div class="col-md-6 col-xl-5 col-xxl-4 offset-md-6 offset-xl-7 offset-xxl-8 align-items-center align-self-center mx-auto">
             <div></div>
-            <form class="border rounded shadow p-3 p-md-4 p-lg-5" method="post" style="background: var(--bs-body-bg);" action="/cars/take_current_car_price_api" onsubmit="&quot;updatePage()&quot;">
+            <form class="border rounded shadow p-3 p-md-4 p-lg-5" id="RateForm" method="post" style="background: var(--bs-body-bg);" action="/cars/take_current_car_price_api/{{data.activ_lot_data.id}}" idrateform="">
                 <h3 class="text-center mb-3" style="color: #d8b511;">Аукцион</h3>
                 <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Текущий лидер: {{data.activ_lot_data.current_owner}}</strong><strong style="font-size: 20px;margin-bottom: 0px;color: var(--bs-cyan);margin-top: 11px;">Цена покупки: {{data.activ_lot_data.buy_price}} р.</strong><strong style="font-size: 20px;margin-bottom: 0px;margin-top: 18px;color: var(--bs-success);">Текущая ставка: {{data.activ_lot_data.current_price}} р.</strong><strong style="font-size: 15px;margin-bottom: 0px;margin-top: 42px;color: #004454;">Минимальный шаг: {{data.activ_lot_data.price_step}}р.</strong></div>
                 <div class="mb-3"></div>
                 <div class="mb-3"></div>
                 <div class="mb-3"><input class="form-control" type="number" name="price" placeholder="Введите вашу ставку" style="width: 385.328px;margin-top: 14px;"></div>
-                <div class="d-grid justify-content-center align-items-center align-content-center align-self-center mb-3"><button class="btn btn-primary align-self-center" type="submit" style="background: #c6a00c;margin-top: 3px;">Сделать ставку</button></div>
+                <div class="d-grid justify-content-center align-items-center align-content-center align-self-center mb-3"><button class="btn btn-primary align-self-center" type="button" style="background: #c6a00c;margin-top: 3px;" onclick="submitFormAndReload(event)">Сделать ставку</button></div>
             </form>
         </div>
     </section>

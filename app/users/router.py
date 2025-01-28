@@ -60,12 +60,12 @@ async def logout(response: Response):
 
 @router.post('/update_user_info_api')
 async def update_user_info(user_update: SUserUpdate = Body(...), user: SUser = Depends(get_current_user)):
-    print(user_update.name, '\n')
-    print(user_update.surname, '\n')
-    print(user_update.telephone, '\n')
-    print(user_update.description, '\n', '\n', '\n')
+
+    if not user:
+        raise IncorrectEmailOrPassword
 
     await UsersDAO.update_one(user.id, **user_update.dict())
+
 
 
 

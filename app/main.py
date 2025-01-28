@@ -8,6 +8,9 @@ from users.router import router as users_router
 from pages.router import router as pages_router
 from images.router import router as images_router
 
+from config import settings
+from scheduler import Scheduler
+
 #uvicorn app.main:app --reload
 #uvicorn app.main:app --host  0.0.0.0 --port 3333 --reload
 
@@ -23,6 +26,8 @@ app.include_router(users_router)
 app.include_router(cars_router)
 app.include_router(pages_router)
 app.include_router(images_router)
+
+scheduler = Scheduler()
 
 
 @app.get("/")
@@ -43,7 +48,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+scheduler.start()
 
 
 

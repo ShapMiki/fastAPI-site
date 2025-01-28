@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, Computed, Double
+from sqlalchemy import Column, Integer, String, ForeignKey, Computed, Double, DateTime
 from modules.database import Base
 
 """class Car():
@@ -43,17 +43,18 @@ class ActivCars(Base):
     buy_price = Column(Double, default=float('inf'), nullable=False)
     price_step = Column(Double)
 
-    start_date = Column(Date)
-    end_date = Column(Date)
+    start_date = Column(DateTime)
+    end_date = Column(DateTime)
 
     registration = Column(String)
-    images =  Column(String, default='[]', nullable=False)
+    images = Column(String, default='[]', nullable=False)
 
     def to_dict(self) -> dict:
         return {
             'id': self.id,
             'name': self.name,
             'description': self.description,
+            'ltype': self.ltype,
             'owner': self.owner,
             'brand': self.brand,
             'model': self.model,
@@ -103,7 +104,7 @@ class PropertyCars(Base):
 
     price = Column(Double)
 
-    buy_date = Column(Date)
+    buy_date = Column(DateTime)
 
     registration = Column(String)
     images =  Column(String, default='[]', nullable=False)

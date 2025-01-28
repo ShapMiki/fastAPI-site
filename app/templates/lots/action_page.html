@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
-                    <p class="w-lg-50"></p><a class="btn btn-primary btn-lg me-2" role="button" href="/pages/lot_load/car" style="transform: translate(0px) translateX(0px) translateY(0px);width: 183px;padding-right: 16px;margin-right: 0px;margin-left: 0px;">Создать лот</a>
+                    <p class="w-lg-50"></p><a class="btn btn-primary btn-lg me-2" role="button" href="/pages/lot_load" style="transform: translate(0px) translateX(0px) translateY(0px);width: 183px;padding-right: 16px;margin-right: 0px;margin-left: 0px;">Создать лот</a>
                 </div>
                 <div class="col"></div>
             </div>
@@ -45,15 +45,14 @@
                 <div class="bg-dark border rounded border-0 border-dark overflow-hidden">
                     <div class="row g-0">
                         <div class="col-md-6">
-                            <div class="text-white p-4 p-md-5">
+                            <div class="text-white p-4 p-md-5" style="min-height: 467px;height: initial;">
                                 <h2 class="fw-bold text-white mb-3">ЛОТ {{locdata.id}}</h2>
                                 <p class="mb-4">{{locdata.description}}</p>
                                 <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"></div>
-                                <div class="d-flex my-3 pb-0 mb-2 mt-0" style="display: grid;width: 571px;height: 51px;">
-                                    <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;width: 571px;height: 51px;margin-right: 78px;"><strong>Начальная цена: {{locdata.start_price}}</strong><strong>Цена выкупа: {{locdata.buy_price}}</strong><strong>Текущая ставка: {{locdata.current_price}}</strong></div>
-                                    <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"><a class="btn btn-primary btn-lg me-2" role="button" href="/pages/lot_page/{{data.activ_lot_data.ltype}}/{{l_id}}" style="transform: translate(0px) translateX(0px) translateY(0px);width: 183px;padding-right: 16px;margin-right: 0px;margin-left: 0px;">Перейти</a></div>
+                                <div class="my-3 pb-0 mb-1" style="display: inline-grid;height: 51px;width: auto;">
+                                    <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;height: 51px;margin-right: 0px;"><strong>Начальная цена: {{locdata.start_price}}</strong><strong>Цена выкупа: {{locdata.buy_price}}</strong><strong>Текущая ставка: {{locdata.current_price}}</strong></div><a class="btn btn-primary btn-lg" role="button" href="/pages/activ_lot_page/{{locdata.id}}" style="max-width: 182px;margin-top: 40px;">Перейти</a>
+                                    <div style="margin-top: 27px;"><strong style="margin-right: 94px;">Начало: {{locdata.start_date}}</strong><strong style="transform: translateX(176px);">Конец: {{locdata.end_date}}</strong></div>
                                 </div>
-                                <div class="justify-content-start my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;transform: translateY(45px);"><strong>Начало: {{locdata.start_date}}</strong><strong style="transform: translateX(176px);">Конец: {{locdata.end_date}}</strong></div>
                             </div>
                         </div>
                         <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>

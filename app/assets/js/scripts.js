@@ -1,76 +1,198 @@
-document.getElementById('updateForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Останавливаем стандартную отправку формы
-    console.log("Submit function called"); // Для проверки
-    submitForm_and_file();
-});
+async function submitForm_and_foto() {
+    // Останавливаем стандартное поведение формы
+    event.preventDefault();
 
-function submitForm_and_file() {
+    // Получаем элемент формы
     const form = document.getElementById('updateForm');
+    // Создаем объект FormData из формы
     const formData = new FormData(form);
-    const jsonData = {};
 
+    // Инициализируем пустой объект для хранения JSON данных и переменную для файла изображения
+    const jsonData = {};
+    let imageFile = null;
+
+    // Перебираем каждую запись в объекте FormData
     formData.forEach((value, key) => {
-        if (key !== 'image') {
+        // Если ключ равен 'image', сохраняем значение в imageFile
+        if (key === 'image') {
+            imageFile = value;
+        } else {
+            // В противном случае сохраняем значение в jsonData
             jsonData[key] = value;
         }
     });
 
-    const imageFile = formData.get('image');
-    const photoapiUrl = form.getAttribute('photo-api-url');
-    console.log('Photo API URL:', photoapiUrl); // Добавьте этот лог
-    const apiUrl = form.getAttribute('data-api-url');
-
-    // Создаем массив Promises
-    const requests = [];
-
-    // Отправка JSON данных
-    const jsonRequest = fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(jsonData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('JSON данные успешно отправлены:', data);
-    })
-    .catch(error => {
-        console.error('Ошибка при отправке JSON данных:', error);
-    });
-
-    requests.push(jsonRequest);
-
-    // Отправка файла изображения, если он есть
-    if (imageFile) {
-        const imageFormData = new FormData();
-        imageFormData.append('image', imageFile);
-
-        const imageRequest = fetch(photoapiUrl, {
+    try {
+        // Отправляем JSON данные на сервер
+        const jsonResponse = await fetch(form.getAttribute('data-api-url'), {
             method: 'POST',
-            body: imageFormData
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Файл изображения успешно отправлен:', data);
-        })
-        .catch(error => {
-            console.error('Ошибка при отправке файла изображения:', error);
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData),
         });
 
-        requests.push(imageRequest);
-    }
+        // Если ответ не ok, выбрасываем ошибку
+        if (!jsonResponse.ok) throw new Error('Ошибка при отправке JSON данных');
 
-    // Ожидаем выполнения всех запросов
-    Promise.all(requests)
-    .then(() => {
-        console.log('Все запросы успешно выполнены');
-    })
-    .catch(error => {
-        console.error('Ошибка при выполнении одного из запросов:', error);
-    });
+        // Логируем успешный ответ с JSON данными
+        console.log('JSON данные успешно отправлены:', await jsonResponse.json());
+
+        // Если есть файл изображения, отправляем его на сервер
+        if (imageFile) {
+            const imageFormData = new FormData();
+            imageFormData.append('image', imageFile);
+
+            const imageResponse = await fetch(form.getAttribute('photo-api-url'), {
+                method: 'POST',
+                body: imageFormData,
+            });
+
+            // Если ответ не ok, выбрасываем ошибку
+            if (!imageResponse.ok) throw new Error('Ошибка при отправке файла изображения');
+
+            // Логируем успешный ответ с файлом изображения
+            console.log('Файл изображения успешно отправлен:', await imageResponse.json());
+        }
+
+        // Логируем, что все данные успешно отправлены
+        console.log('Все данные успешно отправлены!');
+    } catch (error) {
+        // Логируем любые ошибки, возникшие во время выполнения fetch операций
+        console.error('Ошибка при отправке данных:', error);
+    }
+    window.location.href = '/pages/personal_account';
 }
 //
+
+
+let selectedFiles = [];
+
+document.getElementById('fileInput').addEventListener('change', function(event) {
+    const files = event.target.files;
+    if (selectedFiles.length + files.length > 10) {
+        alert('Вы можете загрузить не более 10 файлов.');
+        return;
+    }
+    for (let i = 0; i < files.length; i++) {
+        selectedFiles.push(files[i]);
+    }
+});
+
+
+async function fetchUploadCarLot(event) {
+    event.preventDefault(); // Останавливаем стандартное поведение формы
+
+    const form = document.getElementById('carLotForm');
+    const formData = new FormData(form);
+
+    const jsonData = {};
+    const imageFiles = selectedFiles; // Берем файлы из глобального selectedFiles
+
+    // Перебираем данные формы, исключая файлы
+    formData.forEach((value, key) => {
+        if (!key.startsWith('image')) {
+            jsonData[key] = value;
+        }
+    });
+
+    try {
+        // Отправляем JSON данные на сервер
+        const jsonResponse = await fetch('/cars/add_activ_lot_api', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData),
+        });
+
+        if (!jsonResponse.ok) {
+            throw new Error(`Ошибка при отправке JSON данных: ${jsonResponse.statusText}`);
+        }
+
+        const jsonResult = await jsonResponse.json();
+        const carId = jsonResult.car_id;
+
+        console.log('JSON данные успешно отправлены:', jsonResult);
+
+        // Отправка файлов изображений, если они есть
+        if (imageFiles.length > 0) {
+            const imageFormData = new FormData();
+            imageFiles.forEach((file, index) => {
+                imageFormData.append(`image${index}`, file);
+            });
+
+            try {
+                const imageResponse = await fetch(`/images/upload_car_images/${carId}`, {
+                    method: 'POST',
+                    body: imageFormData,
+                });
+
+                if (!imageResponse.ok) {
+                    throw new Error(`Ошибка при отправке файлов изображений: ${imageResponse.statusText}`);
+                }
+
+                console.log('Файлы изображений успешно отправлены:', await imageResponse.json());
+            } catch (error) {
+                console.error('Ошибка при отправке файлов изображений:', error);
+                alert('Не удалось отправить изображения. Попробуйте снова.');
+                return;
+            }
+        } else {
+            console.log('Файлы изображений отсутствуют, отправка пропущена.');
+        }
+
+        // Если все данные успешно отправлены
+        console.log('Все данные успешно отправлены!');
+        window.location.href = '/pages/personal_account';
+    } catch (error) {
+        console.error('Ошибка при отправке JSON данных:', error);
+        alert('Не удалось отправить данные лота. Попробуйте снова.');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+async function submitFormAndReload(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const form = document.getElementById('RateForm');
+    const formData = new FormData(form);
+
+    const jsonData = {};
+    formData.forEach((value, key) => {
+        jsonData[key] = value;
+    });
+
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        });
+
+        if (response.ok) {
+            console.log('Form data sent successfully');
+            setTimeout(() => {
+                window.location.reload();
+            }, 400); // Reload the page after 0.4 seconds
+        } else {
+            console.error('Error sending form data');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 
 
 function redirectAfterSubmit(event) {
@@ -101,7 +223,7 @@ function redirectAfterSubmit(event) {
     });
 }
 
-
+/*
 document.getElementById('mainForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -130,9 +252,9 @@ document.getElementById('mainForm').addEventListener('submit', async function(ev
     });
 
     alert('Files and form data uploaded successfully');
-});
+});*/
 
-
+/*
 function submitForm() {
     const form = document.getElementById('updateForm');
     const formData = new FormData(form);
@@ -181,4 +303,4 @@ function submitForm() {
     });
 }
 
-
+*/

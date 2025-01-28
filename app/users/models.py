@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Double, Computed, Date
+from sqlalchemy import Column, Integer, String, Double, Computed, Date, ARRAY
 from modules.database import Base
 from datetime import datetime
 
@@ -22,19 +22,19 @@ class Users(Base):
 
     password = Column(String, nullable=False)
 
-    have_car_lots = Column(String, default='[]', nullable=False)
-    have_gosnumber_lots = Column(String, default='[]', nullable=False)
+    like_car_lots = Column(String, default='[]', nullable=False)
 
-    property_cars = Column(String, default='[]', nullable=False)
-    property_gosnumbers = Column(String, default='[]', nullable=False)
+    like_property_cars = Column(String, default='[]', nullable=False)
+
+    #last_lot_time = Column(Date, default=datetime.utcnow(), nullable=False) #время последнего лота, чтобы не было спама
 
     verefy_email = Column(String, default='False', nullable=False)
     verefy_passport = Column(String, default='False', nullable=False)
 
     ballance = Column(Double, default=0,  nullable=False)
-
     image = Column(String, default='none_user_photo.jpg')
 
+    chat_list = Column(ARRAY(Integer))
 
 """class Property(Base):
     __tablename__ = 'property'

@@ -18,7 +18,7 @@
     <nav class="navbar navbar-expand bg-light">
         <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"></button>
             <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-2" style="position: static;">
-                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}} р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages">Торговать</a></div>
+                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}} р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/actions">Торговать</a></div>
             </div>
         </div>
     </nav>
@@ -31,12 +31,12 @@
             </div>
         </div>
     </section>
-    <section class="position-relative py-4 py-xl-5" style="padding-left: 140px;">
+    <section class="mx-auto position-relative py-4 py-xl-5">
         <div class="container">
-            <div style="display: inline-flex;">
-                <div><img width="300" height="300" style="width: 300px;height: 300px;margin-right: 0px;" src="{{data.user_data.image}}"></div>
-                <div style="padding-left: 108px;display: grid;"><strong style="font-size: 34px;">Информация о вас:</strong><strong>Имя: {{data.user_data.name}}</strong><strong>Фамилия: {{data.user_data.surname}}</strong><strong>Номер паспорта: {{data.user_data.passport_number}}</strong><strong>Балланс: {{data.user_data.ballance}}</strong></div>
-                <div style="padding-left: 108px;display: grid;"><strong></strong><strong>Email: {{data.user_data.email}}</strong><strong>Номер телефона: {{data.user_data.telephone}}</strong><strong>Дата регистрации: {{data.user_data.registered_at}}</strong><strong><a class="btn btn-primary ms-auto" role="button" href="/pages/change_info_about_me">Изменить информацию о себе</a></strong><strong></strong>
+            <div class="d-grid d-print-flex d-sm-grid d-md-grid d-lg-flex d-xl-flex d-xxl-flex" style="display: inline-flex;">
+                <div><img width="300" height="300" style="width: 300px;height: 300px;margin-right: 0px;" src="data:image/jpeg;base64,{{ data.user_data.image_base64 }}"></div>
+                <div style="padding-left: 0px;display: grid;"><strong style="font-size: 34px;">Информация о вас:</strong><strong>Имя: {{data.user_data.name}}</strong><strong>Фамилия: {{data.user_data.surname}}</strong><strong>Номер паспорта: {{data.user_data.passport_number}}</strong><strong>Балланс: {{data.user_data.ballance}}</strong></div>
+                <div style="padding-left: 0px;display: grid;"><strong></strong><strong>Email: {{data.user_data.email}}</strong><strong>Номер телефона: {{data.user_data.telephone}}</strong><strong>Дата регистрации: {{data.user_data.registered_at}}</strong><strong><a class="btn btn-primary ms-auto" role="button" href="/pages/change_info_about_me">Изменить информацию о себе</a></strong><strong></strong>
                     <form action="/auth/logout_api" method="post"><button class="btn btn-primary" type="submit" style="margin-right: 0px;background: #e04d5b;">Выйти из аккаунта</button></form>
                 </div>
             </div>
@@ -60,19 +60,18 @@
                 </div>
             </div><strong style="font-size: 28px;">Ваши активные лоты:</strong>
         </div><code>{% if data.activ_lot_data %}</code><code>{% for locdata in data.activ_lot_data%}</code>
-        <div class="container" style="margin-bottom: 20px;margin-top: 20px;">
+        <div class="container" style="margin-bottom: 30px;margin-top: 20px;">
             <div class="bg-dark border rounded border-0 border-dark overflow-hidden">
                 <div class="row g-0">
                     <div class="col-md-6">
-                        <div class="text-white p-4 p-md-5">
+                        <div class="text-white p-4 p-md-5" style="min-height: 470px;">
                             <h2 class="fw-bold text-white mb-3">ЛОТ {{locdata.id}}</h2>
                             <p class="mb-4">{{locdata.description}}</p>
                             <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"></div>
-                            <div class="d-flex my-3 pb-0 mb-2 mt-0" style="display: grid;width: 571px;height: 77px;">
-                                <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"><strong>Начальная цена: {{locdata.start_price}}</strong><strong><strong>Цена выкупа: {{locdata.buy_price}}</strong>Текущая ставка: {{locdata.current_price}}</strong></div>
-                                <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"><a class="btn btn-primary btn-lg me-2" role="button" href="/pages/lot_page/{{data.activ_lot_data.ltype}}/{{l_id}}" style="transform: translate(0px) translateX(0px) translateY(0px);width: 183px;padding-right: 16px;margin-right: 0px;margin-left: 0px;">Перейти</a></div>
+                            <div class="my-3 pb-0 mb-1" style="display: inline-grid;height: 51px;width: auto;">
+                                <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;height: 51px;margin-right: 0px;"><strong>Начальная цена: {{locdata.start_price}}</strong><strong>Цена выкупа: {{locdata.buy_price}}</strong><strong>Текущая ставка: {{locdata.current_price}}</strong></div><a class="btn btn-primary btn-lg" role="button" href="/pages/activ_lot_page/{{locdata.id}}" style="max-width: 182px;margin-top: 40px;">Перейти</a>
+                                <div style="margin-top: 27px;"><strong style="margin-right: 94px;">Начало: {{locdata.start_date}}</strong><strong style="transform: translateX(176px);">Конец: {{locdata.end_date}}</strong></div>
                             </div>
-                            <div class="justify-content-start my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;transform: translateY(45px);"><strong>Начало: {{locdata.start_date}}</strong><strong style="transform: translateX(176px);">Конец: {{locdata.end_date}}</strong></div>
                         </div>
                     </div>
                     <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>
@@ -88,15 +87,18 @@
                 </div>
             </div><strong style="font-size: 28px;">Ваши приобритения:</strong>
         </div><code>{% if data.property_data %}</code><code>{% for locdata in data.property_data %}</code>
-        <div class="container" style="margin-top: 20px;margin-bottom: 20px;">
+        <div class="container" style="margin-bottom: 30px;margin-top: 20px;">
             <div class="bg-dark border rounded border-0 border-dark overflow-hidden">
                 <div class="row g-0">
                     <div class="col-md-6">
-                        <div class="text-white p-4 p-md-5">
-                            <h2 class="fw-bold text-white mb-3"><strong>ЛОТ {{locdata.id}}</strong></h2>
+                        <div class="text-white p-4 p-md-5" style="min-height: 470px;">
+                            <h2 class="fw-bold text-white mb-3">ЛОТ {{locdata.id}}</h2>
                             <p class="mb-4">{{locdata.description}}</p>
                             <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"></div>
-                            <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;transform: translateY(45px);"><strong>Цена: {{locdata.price}}</strong></div>
+                            <div class="my-3 pb-0 mb-1" style="display: inline-grid;height: 51px;width: auto;">
+                                <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;height: 51px;margin-right: 0px;"><strong>Цена: {{locdata.price}}</strong></div><a class="btn btn-primary btn-lg" role="button" href="/pages/activ_lot_page/{{locdata.id}}" style="max-width: 182px;margin-top: 40px;">Перейти</a>
+                                <div style="margin-top: 27px;"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>

@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     DB_PASSWORD: str
     DB_NAME: str
     DATABASE_URL: Optional[str] = None
+    image_scr: str
 
     @model_validator(mode="before")
     @classmethod
