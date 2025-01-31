@@ -69,13 +69,7 @@ async def update_user_info(user_update: SUserUpdate = Body(...), user: SUser = D
 
 
 
-async def get_user_open_sourse(responce: Response,  user: SUser = Depends(get_current_user)):
-    data = {
-        "name": user.name,
-        "email": user.email,
-        "ballance": user.ballance
-    }
-    return data
+
 
 
 """@router.get('/personal_account')

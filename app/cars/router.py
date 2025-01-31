@@ -13,6 +13,8 @@ from users.dependencies import get_current_user
 from users.schemas import SUser
 from users.dao import UsersDAO
 
+from datetime import datetime
+
 router = APIRouter(
     prefix="/cars",
     tags=["cars"],
@@ -37,12 +39,15 @@ async def add_car(response: Response, car_data: SUpLoadActivCars, user: SUser = 
 
 
 @router.post("/take_current_car_price_api/{car_id}")
-async def register(responce: Response, car_id, data: SUppPrice, user: SUser = Depends(get_current_user) ):
+async def register(response: Response, car_id, data: SUppPrice, user: SUser = Depends(get_current_user) ):
 
     car_data = await ActivCarsDAO.find_by_id(int(car_id))
 
     if not car_data:
         raise HTTPException(status_code=404, detail="Car not found")
+
+    if car_data.start_date > datetime.utcnow():
+        raise HTTPException(status_code=400, detail="Auction not started")
 
     if car_data.owner == user.id:
         raise HTTPException(status_code=400, detail="You can't buy your own car")
@@ -56,7 +61,9 @@ async def register(responce: Response, car_id, data: SUppPrice, user: SUser = De
 
     elif car_data.buy_price <= data.price and car_data.buy_price != 0:
         await transfer_activ_to_pasiv(data, car_data, user)
-        return  RedirectResponse(url="/pages/personal_account", status_code=303)
+        response.status_code = 303
+        response.headers["Location"] = "/pages/personal_account"
+        return {"detail": "Redirecting to personal account"}
 
 
     if (car_data.current_price + car_data.price_step > data.price or car_data.start_price > data.price) and not (car_data.current_price == car_data.start_price and data.price == car_data.start_price):

@@ -14,11 +14,11 @@
     <link rel="stylesheet" href="/assets/css/Simple-Slider.css">
 </head>
 
-<body style="font-size: 16px;">
+<body>
     <nav class="navbar navbar-expand bg-light">
-        <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"></button>
-            <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-1" style="position: static;">
-                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}}р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/personal_account">Личный кабинет</a></div>
+        <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"></button>
+            <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-2" style="position: static;">
+                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}} р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/actions">Торговать</a></div>
             </div>
         </div>
     </nav>
@@ -31,66 +31,76 @@
             </div>
         </div>
     </section>
+    <section class="position-relative py-4 py-xl-5" style="padding-left: 0px;display: inline-block;">
+        <div class="container d-lg-flex d-xl-flex d-xxl-flex" style="display: inline-block;width: 947px;margin-right: 0px;padding: 0px;margin-left: 60px;margin-bottom: 0px;">
+            <div style="width: 323px;"><img width="300" height="300" style="width: 300px;height: 300px;margin-right: 0px;" src="data:image/jpeg;base64,{{ data.stranger.user_data.image_base64 }}"></div>
+            <div style="padding-left: 0px;display: grid;width: 502px;"><strong style="font-size: 30px;display: block;width: 411px;">Информация:</strong><strong>Имя: {{data.stranger.user_data.name}}</strong><strong>Фамилия: {{data.stranger.user_data.surname}}</strong><strong>Email: {{data.stranger.user_data.email}}</strong><strong>Номер телефона: {{data.stranger.user_data.telephone}}</strong><a class="btn btn-primary" role="button" style="margin: 0px;margin-right: 0px;background: var(--bs-gray-500);max-width: 200px;max-height: 46px;" href="/auth/chat_api/{{data.stranger.user_data.id}}">Начать чат</a></div>
+            <div style="display: inline-flex;"></div>
+        </div>
+    </section>
     <section class="position-relative py-4 py-xl-5">
         <div class="container">
             <div class="row mb-5">
-                <div class="col"><strong style="font-size: 31px;">Лот {{data.activ_lot_data.id}}</strong></div>
+                <div class="col"><strong>Описание: {{data.stranger.user_data.description}}</strong></div>
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
                     <p class="w-lg-50"></p>
                 </div>
             </div>
+        </div>
+    </section>
+    <section class="py-4 py-xl-5">
+        <div class="container">
             <div class="row mb-5">
-                <div class="col"><strong style="font-size: 31px;">&nbsp;{{data.activ_lot_data.name}}</strong></div>
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
                     <p class="w-lg-50"></p>
                 </div>
-            </div>
-        </div>
-        <div class="simple-slider">
-            <div class="swiper-container">
-                <div class="swiper-wrapper"><code>{% for image in data.activ_lot_data.images %}</code>
-                    <div class="swiper-slide" style="background: url('data:image/jpeg;base64,{{ image }}') center center / cover no-repeat;"></div><code>{% endfor %}</code>
+            </div><strong style="font-size: 28px;">Активные лоты:</strong>
+        </div><code>{% if data.stranger.activ_lot_data %}</code><code>{% for locdata in data.stranger.activ_lot_data%}</code>
+        <div class="container" style="margin-bottom: 30px;margin-top: 20px;">
+            <div class="bg-dark border rounded border-0 border-dark overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-6">
+                        <div class="text-white p-4 p-md-5" style="min-height: 470px;">
+                            <h2 class="fw-bold text-white mb-3">ЛОТ {{locdata.id}}</h2>
+                            <p class="mb-4">{{locdata.description}}</p>
+                            <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"></div>
+                            <div class="my-3 pb-0 mb-1" style="display: inline-grid;height: 51px;width: auto;">
+                                <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;height: 51px;margin-right: 0px;"><strong>Начальная цена: {{locdata.start_price}}</strong><strong>Цена выкупа: {{locdata.buy_price}}</strong><strong>Текущая ставка: {{locdata.current_price}}</strong></div><a class="btn btn-primary btn-lg" role="button" href="/pages/activ_lot_page/{{locdata.id}}" style="max-width: 182px;margin-top: 40px;">Перейти</a>
+                                <div style="margin-top: 27px;"><strong style="margin-right: 94px;">Начало: {{locdata.start_date}}</strong><strong style="transform: translateX(176px);">Конец: {{locdata.end_date}}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="data:image/jpeg;base64,{{ locdata.image }}"></div>
                 </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
-        </div>
+        </div><code>{% endfor %}</code><code>{% else %}</code><strong>Нет активных лотов(</strong><code>{% endif %}</code>
     </section>
-    <section class="position-relative py-4 py-xl-5">
+    <section class="py-4 py-xl-5">
         <div class="container">
-            <div style="display: grid;margin-left: 40px;margin-bottom: 40px;"><strong style="font-size: 20px;margin-bottom: 10px;">Марка:<small><strong>&nbsp;{{data.activ_lot_data.brand}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 10px;">Модель:<small><strong>&nbsp;{{data.activ_lot_data.model}}</strong></small></strong><strong style="font-size: 20px;">Кузов:&nbsp;<small><strong>&nbsp;{{data.activ_lot_data.body}}</strong></small></strong></div>
-            <div class="d-grid d-print-grid d-sm-grid d-md-grid d-lg-flex d-xl-flex d-xxl-flex" style="margin-left: 40px;">
-                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Тип двигателя:<small><strong>&nbsp;{{data.activ_lot_data.fuel_type}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Обьем Двигателя:<small><strong>&nbsp;{{data.activ_lot_data.engine_volume}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Мощность:&nbsp;<small><strong>&nbsp;{{data.activ_lot_data.power}} лс.</strong></small></strong></div>
-                <div class="d-grid" style="margin-left: 40px;"><strong style="font-size: 20px;margin-bottom: 0px;">Год:&nbsp;<small><strong>&nbsp;{{data.activ_lot_data.year}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Пробег:<small><strong>&nbsp;{{data.activ_lot_data.range}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Тип коробки:<small><strong>&nbsp;{{data.activ_lot_data.gear_type}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Регистрация:<small><strong>{{data.activ_lot_data.registration}}</strong></small></strong></div>
+            <div class="row mb-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <p class="w-lg-50"></p>
+                </div>
+            </div><strong style="font-size: 28px;">Приобритения:</strong>
+        </div><code>{% if data.stranger.property_data %}</code><code>{% for locdata in data.stranger.property_data %}</code>
+        <div class="container" style="margin-bottom: 30px;margin-top: 20px;">
+            <div class="bg-dark border rounded border-0 border-dark overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-6">
+                        <div class="text-white p-4 p-md-5" style="min-height: 470px;">
+                            <h2 class="fw-bold text-white mb-3">ЛОТ {{locdata.id}}</h2>
+                            <p class="mb-4">{{locdata.description}}</p>
+                            <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"></div>
+                            <div class="my-3 pb-0 mb-1" style="display: inline-grid;height: 51px;width: auto;">
+                                <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;height: 51px;margin-right: 0px;"><strong>Цена: {{locdata.price}}</strong></div><a class="btn btn-primary btn-lg" role="button" href="/pages/activ_lot_page/{{locdata.id}}" style="max-width: 182px;margin-top: 40px;">Перейти</a>
+                                <div style="margin-top: 27px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="data:image/jpeg;base64,{{ locdata.image }}"></div>
+                </div>
             </div>
-            <div class="d-flex" style="margin-left: 40px;margin-top: 40px;height: 14px;"><strong style="font-size: 20px;margin-bottom: 0px;">Владелец:&nbsp;<small><strong>&nbsp;{{data.another_data.owner}}</strong></small></strong></div>
-        </div>
-    </section>
-    <div class="container" style="display: grid;margin-bottom: 20px;"><strong style="font-size: 20px;margin-bottom: 0px;">Описание:</strong><small><strong>&nbsp;{{data.activ_lot_data.description}}</strong></small></div>
-    <section class="position-relative py-4 py-xl-5">
-        <div class="container">
-            <div class="d-flex" style="margin-left: 40px;">
-                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Текущий лидер:<small><strong>&nbsp; {{data.activ_lot_data.current_owner}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Дата начала аукциона:<small><strong>&nbsp;{{data.activ_lot_data.start_date}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Дата конца аукциона:<small><strong>&nbsp;{{data.activ_lot_data.end_date}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;width: 657.047px;display: block;">Начальная цена:&nbsp;<small><strong>&nbsp;{{data.activ_lot_data.start_price}}</strong></small></strong></div>
-            </div>
-            <div class="d-flex" style="margin-left: 40px;margin-top: 40px;height: 120px;">
-                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Владелец: {{data.another_data.owner}}</strong></div>
-            </div>
-            <div></div>
-        </div>
-    </section>
-    <section class="justify-content-center align-items-center align-content-center align-self-center position-relative py-5">
-        <div class="col-md-6 col-xl-5 col-xxl-4 offset-md-6 offset-xl-7 offset-xxl-8 align-items-center align-self-center mx-auto">
-            <div></div>
-            <form class="border rounded shadow p-3 p-md-4 p-lg-5" id="RateForm" method="post" style="background: var(--bs-body-bg);" action="/cars/take_current_car_price_api/{{data.activ_lot_data.id}}" idrateform="">
-                <h3 class="text-center mb-3" style="color: #d8b511;">Аукцион</h3>
-                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Текущий лидер: {{data.activ_lot_data.current_owner}}</strong><strong style="font-size: 20px;margin-bottom: 0px;color: var(--bs-cyan);margin-top: 11px;">Цена покупки: {{data.activ_lot_data.buy_price}} р.</strong><strong style="font-size: 20px;margin-bottom: 0px;margin-top: 18px;color: var(--bs-success);">Текущая ставка: {{data.activ_lot_data.current_price}} р.</strong><strong style="font-size: 15px;margin-bottom: 0px;margin-top: 42px;color: #004454;">Минимальный шаг: {{data.activ_lot_data.price_step}}р.</strong></div>
-                <div class="mb-3"></div>
-                <div class="mb-3"></div>
-                <div class="mb-3"><input class="form-control" type="number" name="price" placeholder="Введите вашу ставку" style="width: 385.328px;margin-top: 14px;"></div>
-                <div class="d-grid justify-content-center align-items-center align-content-center align-self-center mb-3"><button class="btn btn-primary align-self-center" type="button" style="background: #c6a00c;margin-top: 3px;" onclick="submitFormAndReload(event)">Сделать ставку</button></div>
-            </form>
-        </div>
+        </div><code>{% endfor %}</code><code>{% else %}</code><strong>Нет активных лотов(</strong><code>{% endif%}</code>
     </section>
     <section class="position-relative py-4 py-xl-5">
         <div class="container">

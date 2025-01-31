@@ -53,13 +53,14 @@ async def show_index(request: Request, user: SUser = Depends(get_current_user)):
     return templates.TemplateResponse("index.html", {"request": request, 'data': data})
 
 
+@router.get('/action_page')
+async def redirect_action_page():
+    return RedirectResponse(url="/pages/actions")
 
 @router.get('/actions')
 async def load_action_page(request: Request, responce: Response, user: SUser = Depends(get_current_user)):
 
-    data = await get_all_user_data(user, False, False)
-
-    data['activ_lot_data'] =  [car.to_dict() for car in await ActivCarsDAO.find_all()]
+    data = await get_all_data(user, True, False)
 
     return templates.TemplateResponse("lots/action_page.html", {"request": request, "data": data})
 
@@ -92,6 +93,17 @@ async def activ_lot_page(lot_id: int, request: Request, responce: Response, user
         return RedirectResponse(url="/pages/action_page")
 
     return templates.TemplateResponse("lots/cars/action_lot_page.html", {"request": request, "data": data})
+
+
+@router.get('/property_lot_page/{lot_id}')
+async def property_lot_page(lot_id: int, request: Request, responce: Response, user: SUser = Depends(get_current_user)):
+
+    data = await get_property_lot_info(user, lot_id)
+
+    if not data['property_lot_data']:
+        return RedirectResponse(url="/pages/personal_account")
+
+    return templates.TemplateResponse("lots/cars/property_lot_page.html", {"request": request, "data": data})
 
 
 

@@ -35,9 +35,9 @@
         <div class="container">
             <div class="d-grid d-print-flex d-sm-grid d-md-grid d-lg-flex d-xl-flex d-xxl-flex" style="display: inline-flex;">
                 <div><img width="300" height="300" style="width: 300px;height: 300px;margin-right: 0px;" src="data:image/jpeg;base64,{{ data.user_data.image_base64 }}"></div>
-                <div style="padding-left: 0px;display: grid;"><strong style="font-size: 34px;">Информация о вас:</strong><strong>Имя: {{data.user_data.name}}</strong><strong>Фамилия: {{data.user_data.surname}}</strong><strong>Номер паспорта: {{data.user_data.passport_number}}</strong><strong>Балланс: {{data.user_data.ballance}}</strong></div>
-                <div style="padding-left: 0px;display: grid;"><strong></strong><strong>Email: {{data.user_data.email}}</strong><strong>Номер телефона: {{data.user_data.telephone}}</strong><strong>Дата регистрации: {{data.user_data.registered_at}}</strong><strong><a class="btn btn-primary ms-auto" role="button" href="/pages/change_info_about_me">Изменить информацию о себе</a></strong><strong></strong>
-                    <form action="/auth/logout_api" method="post"><button class="btn btn-primary" type="submit" style="margin-right: 0px;background: #e04d5b;">Выйти из аккаунта</button></form>
+                <div style="padding-left: 0px;display: grid;margin-left: 10px;"><strong style="font-size: 34px;">Информация о вас:</strong><strong>Имя: {{data.user_data.name}}</strong><strong>Фамилия: {{data.user_data.surname}}</strong><strong>Номер паспорта: {{data.user_data.passport_number}}</strong><strong>Балланс: {{data.user_data.ballance}}</strong></div>
+                <div style="padding-left: 10px;display: grid;"><strong></strong><strong>Email: {{data.user_data.email}}</strong><strong>Номер телефона: {{data.user_data.telephone}}</strong><strong>Дата регистрации: {{data.user_data.registered_at}}</strong><strong><a class="btn btn-primary ms-auto" role="button" href="/pages/change_info_about_me">Изменить информацию о себе</a></strong><strong></strong>
+                    <form action="/auth/logout_api" method="post"><button class="btn btn-primary" type="submit" style="margin-right: 0px;background: #e04d5b;" onclick="window.location.href=&#39;/pages/login&#39;">Выйти из аккаунта</button></form>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>
+                    <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="data:image/jpeg;base64,{{ locdata.image }}"></div>
                 </div>
             </div>
         </div><code>{% endfor %}</code><code>{% else %}</code><strong>Нет активных лотов(</strong><code>{% endif %}</code>
@@ -86,7 +86,7 @@
                     <p class="w-lg-50"></p>
                 </div>
             </div><strong style="font-size: 28px;">Ваши приобритения:</strong>
-        </div><code>{% if data.property_data %}</code><code>{% for locdata in data.property_data %}</code>
+        </div><code>{% if data.property_lot_data %}</code><code>{% for locdata in data.property_lot_data %}</code>
         <div class="container" style="margin-bottom: 30px;margin-top: 20px;">
             <div class="bg-dark border rounded border-0 border-dark overflow-hidden">
                 <div class="row g-0">
@@ -96,12 +96,12 @@
                             <p class="mb-4">{{locdata.description}}</p>
                             <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"></div>
                             <div class="my-3 pb-0 mb-1" style="display: inline-grid;height: 51px;width: auto;">
-                                <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;height: 51px;margin-right: 0px;"><strong>Цена: {{locdata.price}}</strong></div><a class="btn btn-primary btn-lg" role="button" href="/pages/activ_lot_page/{{locdata.id}}" style="max-width: 182px;margin-top: 40px;">Перейти</a>
+                                <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;height: 51px;margin-right: 0px;"><strong>Цена: {{locdata.price}}</strong></div><a class="btn btn-primary btn-lg" role="button" href="/pages/property_lot_page/{{locdata.id}}" style="max-width: 182px;margin-top: 40px;">Перейти</a>
                                 <div style="margin-top: 27px;"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"></div>
+                    <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="data:image/jpeg;base64,{{ locdata.image }}"></div>
                 </div>
             </div>
         </div><code>{% endfor %}</code><code>{% else %}</code><strong>Нет активных лотов(</strong><code>{% endif%}</code>

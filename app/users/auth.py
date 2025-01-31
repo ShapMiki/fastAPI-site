@@ -8,13 +8,15 @@ from pydantic import EmailStr
 
 from users.dao import UsersDAO
 
+from config import settings
+
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 ####Вынести в enx
-SECRET_KEY = "b3e7b3b3e7b3b3e7"
-ALGORITHM = "HS256"
+SECRET_KEY = settings.secret_key_for_jwt # "b3e7b3b3e7b3b3e7"
+ALGORITHM = settings.algorithm_for_jwt
 
 
 def verify_password(plain_password, hashed_password):

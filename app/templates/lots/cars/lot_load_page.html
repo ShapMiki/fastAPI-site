@@ -34,7 +34,7 @@
     <section class="position-relative py-4 py-xl-5">
         <div class="container">
             <form id="carLotForm" method="post" action="/cars/add_activ_lot_api" onsubmit="fetchUploadCarLot(event)" enctype="multipart/form-data">
-                <div style="margin-bottom: 10px;"><strong style="font-size: 20px;margin-bottom: 0px;margin-left: 40px;">Загрузите фото:&nbsp;</strong><input class="form-control" type="file" id="fileInput" style="margin-left: 27px;" multiple></div>
+                <div style="margin-bottom: 10px;"><strong style="font-size: 20px;margin-bottom: 0px;margin-left: 40px;">Загрузите фото:&nbsp;</strong><input class="form-control" type="file" id="fileInput" style="margin-left: 27px;" multiple=""></div>
                 <div style="display: flex;margin-bottom: 10px;"><strong style="font-size: 20px;margin-bottom: 0px;margin-left: 40px;">Название лота:&nbsp;</strong><input class="form-control" type="text" style="width: 631.609px;margin-left: 27px;min-width: auto;" name="name" placeholder="(обязат.)" minlength="3" required=""></div>
                 <div style="display: flex;margin-bottom: 10px;"><strong style="font-size: 20px;margin-bottom: 0px;margin-left: 40px;">Марка:&nbsp;</strong><input class="form-control" type="text" style="width: 631.609px;margin-left: 27px;" name="brand" placeholder="BMW/Audi/Mercedes" required="" minlength="2"></div>
                 <div style="display: flex;margin-bottom: 10px;"><strong style="font-size: 20px;margin-bottom: 0px;margin-left: 40px;">Модель:&nbsp;</strong><input class="form-control" type="text" style="width: 631.609px;margin-left: 27px;" name="model" placeholder="M5/Q7/S" oninput="if(this.value===&#39;&#39;){this.removeAttribute(&#39;name&#39;);}"></div>

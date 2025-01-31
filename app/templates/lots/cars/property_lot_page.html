@@ -18,7 +18,7 @@
     <nav class="navbar navbar-expand bg-light">
         <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"></button>
             <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-1" style="position: static;">
-                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}}р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/personal_account">личный кабинет</a></div>
+                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}}р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/personal_account">Личный кабинет</a></div>
             </div>
         </div>
     </nav>
@@ -34,13 +34,13 @@
     <section class="position-relative py-4 py-xl-5">
         <div class="container">
             <div class="row mb-5">
-                <div class="col"><strong style="font-size: 31px;">Лот {{data.activ_lot_data.id}}</strong></div>
+                <div class="col"><strong style="font-size: 31px;">Лот {{data.property_lot_data.id}}</strong></div>
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
                     <p class="w-lg-50"></p>
                 </div>
             </div>
             <div class="row mb-5">
-                <div class="col"><strong style="font-size: 31px;">&nbsp;{{data.activ_lot_data.name}}</strong></div>
+                <div class="col"><strong style="font-size: 31px;">&nbsp;{{data.property_lot_data.name}}</strong></div>
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
                     <p class="w-lg-50"></p>
                 </div>
@@ -48,10 +48,8 @@
         </div>
         <div class="simple-slider">
             <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat;"></div>
-                    <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat;"></div>
-                    <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat;"></div>
+                <div class="swiper-wrapper"><code>{% for image in data.property_lot_data.images %}</code>
+                    <div class="swiper-slide" style="background: url('data:image/jpeg;base64,{{ image }}') center center / cover no-repeat;"></div><code>{% endfor %}</code>
                 </div>
                 <div class="swiper-pagination"></div>
                 <div class="swiper-button-prev"></div>
@@ -61,25 +59,21 @@
     </section>
     <section class="position-relative py-4 py-xl-5">
         <div class="container">
-            <div style="display: grid;margin-left: 40px;"><strong style="font-size: 20px;margin-bottom: 10px;">Марка: {{data.property_data.brand}}</strong><strong style="font-size: 20px;margin-bottom: 10px;">Модель: {{data.property_data.model}}</strong><strong style="font-size: 20px;">Кузов: {{data.property_data.body}}</strong></div>
-            <div style="margin-top: 60px;margin-bottom: 40px;margin-left: 20px;"><strong style="font-size: 20px;margin-bottom: 0px;">Описание: {{data.property_data.description}}</strong></div>
-            <div class="d-flex" style="margin-left: 40px;">
-                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Тип двигателя: {{data.property_data.fuel_type}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Обьем Двигателя: {{data.property_data.engine_volume}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Мощность: {{data.property_data.power}} лс.</strong><strong style="font-size: 20px;margin-bottom: 0px;">Описание: {{data.<strong>property_data</strong>.description}}</strong></div>
-                <div class="d-grid" style="margin-left: 40px;"><strong style="font-size: 20px;margin-bottom: 0px;">Год: {{data.property_data.year}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Пробег: {{data.property_data.range}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Тип коробки: {{data.property_data.gear_type}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Регистрация: {{data.<strong>property_data</strong>.registration}}</strong></div>
+            <div style="display: grid;margin-left: 40px;margin-bottom: 40px;"><strong style="font-size: 20px;margin-bottom: 10px;">Марка:<small><strong>&nbsp;{{data.property_lot_data.brand}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 10px;">Модель:<small><strong>&nbsp;{{data.property_lot_data.model}}</strong></small></strong><strong style="font-size: 20px;">Кузов:&nbsp;<small><strong>&nbsp;{{data.property_lot_data.body}}</strong></small></strong></div>
+            <div class="d-grid d-print-grid d-sm-grid d-md-grid d-lg-flex d-xl-flex d-xxl-flex" style="margin-left: 40px;">
+                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Тип двигателя:<small><strong>&nbsp;{{data.property_lot_data.fuel_type}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Обьем Двигателя:<small><strong>&nbsp;{{data.property_lot_data.engine_volume}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Мощность:&nbsp;<small><strong>&nbsp;{{data.property_lot_data.power}} лс.</strong></small></strong></div>
+                <div class="d-grid" style="margin-left: 40px;"><strong style="font-size: 20px;margin-bottom: 0px;">Год:&nbsp;<small><strong>&nbsp;{{data.property_lot_data.year}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Пробег:<small><strong>&nbsp;{{data.property_lot_data.range}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Тип коробки:<small><strong>&nbsp;{{ data.property_lot_data.gear_type}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 0px;">Регистрация<small><strong>{{ data.property_lot_data.registration}}</strong></small>:</strong></div>
             </div>
-            <div class="d-flex" style="margin-left: 40px;margin-top: 40px;height: 120px;">
-                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Владелец: {{data.property_data.owner}}</strong></div>
-            </div>
-            <div></div>
         </div>
     </section>
+    <div class="container" style="display: grid;margin-bottom: 20px;"><strong style="font-size: 20px;margin-bottom: 0px;">Описание:</strong><small><strong>&nbsp;{{data.property_lot_data.description}}</strong></small></div>
     <section class="position-relative py-4 py-xl-5">
         <div class="container">
             <div class="d-flex" style="margin-left: 40px;">
-                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Текущий лидер: {{data.property_data.current_owner}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Дата приобретения: {{data.property_data.buy_date}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Начальная цена: {{data.property_data.start_price}}</strong></div>
+                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;width: 657.047px;display: block;">Цена:&nbsp;<small><strong>&nbsp;{{data.property_lot_data.price}}</strong></small></strong></div>
             </div>
             <div class="d-flex" style="margin-left: 40px;margin-top: 40px;height: 120px;">
-                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Владелец: {{data.property_data.owner}}</strong></div>
+                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Владелец: {{data.property_lot_data.owner}}</strong></div>
             </div>
             <div></div>
         </div>

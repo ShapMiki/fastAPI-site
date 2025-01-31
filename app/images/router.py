@@ -15,6 +15,7 @@ from cars.dao import ActivCarsDAO
 from fastapi import Depends
 
 import shutil
+from PIL import Image
 
 
 router = APIRouter(
@@ -55,6 +56,21 @@ async def upload_car_images(car_id: int, request: Request, user: SUser = Depends
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(image.file, buffer)
 
+        with Image.open(file_path) as img:
+            img.thumbnail((1400, 500), Image.LANCZOS)
+
+            # Create a new image with the desired size and a white background
+            new_img = Image.new("RGB", (1400, 500), (255, 255, 255))
+
+            # Calculate the position to paste the resized image onto the new image
+            paste_position = ((1400 - img.width) // 2, (500 - img.height) // 2)
+
+            # Paste the resized image onto the new image
+            new_img.paste(img, paste_position)
+
+            # Save the new image
+            new_img.save(file_path)
+
     car.images = json.dumps(image_names)
     await ActivCarsDAO.update_one_by_obj(car)
 
@@ -82,6 +98,21 @@ async def upload_one_image(image: UploadFile = File(), user: SUser = Depends(get
 
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(image.file, buffer)
+
+    with Image.open(file_path) as img:
+        img.thumbnail((300, 300), Image.LANCZOS)
+
+        # Create a new image with the desired size and a white background
+        new_img = Image.new("RGB", (300, 300), (255, 255, 255))
+
+        # Calculate the position to paste the resized image onto the new image
+        paste_position = ((300 - img.width) // 2, (300 - img.height) // 2)
+
+        # Paste the resized image onto the new image
+        new_img.paste(img, paste_position)
+
+        # Save the new image
+        new_img.save(file_path)
 
     await UsersDAO.update_one(user.id, image = image_name)
 

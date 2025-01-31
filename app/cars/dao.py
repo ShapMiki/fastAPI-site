@@ -4,6 +4,9 @@ from cars.models import PropertyCars, ActivCars
 from sqlalchemy import select, insert
 from datetime import datetime
 
+from config import settings
+import json, os
+
 class ActivCarsDAO(BaseDAO):
     model = ActivCars
 
@@ -39,6 +42,30 @@ class ActivCarsDAO(BaseDAO):
             query = select(cls.model).where(cls.model.end_date < datetime.now())
             result = await session.execute(query)
             return result.scalars().all()
+
+
+    @classmethod
+    async def full_delete_by_id(cls, id):
+        async with async_session_maker() as session:
+            async with session.begin():
+                query = select(cls.model).filter_by(id=id)
+                result = await session.execute(query)
+                obj = result.scalar_one_or_none()
+
+                if obj:
+                    localisation_directory = settings.image_scr+"/cars"
+                    images = json.loads(obj.images)
+                    for image in images:
+                        try:
+                            os.remove(f"{localisation_directory}/{image}")
+                        except:
+                            print("image can't deleted")
+                    await session.delete(obj)
+                    await session.commit()
+                return obj
+
+
+
 
 class PropertyCarsDAO(BaseDAO):
 

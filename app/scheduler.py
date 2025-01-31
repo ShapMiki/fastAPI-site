@@ -19,7 +19,7 @@ class Scheduler:
             old_owner = await UsersDAO.find_by_id(activ_car.owner)
 
             if not activ_car.current_owner:
-                await ActivCarsDAO.delete_by_id(activ_car.id)
+                await ActivCarsDAO.full_delete_by_id(activ_car.id)
                 continue
 
             #old_current_owner = await UsersDAO.find_by_id(activ_car.current_owner)

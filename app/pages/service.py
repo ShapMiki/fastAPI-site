@@ -1,47 +1,28 @@
 from users.schemas import SUser
 
 from cars.dao import ActivCarsDAO, PropertyCarsDAO
+from cars.service import *
+
 from users.dao import UsersDAO
+from users.service import get_user_personal_info
 
 from config import settings
+import json
 
-import base64
+from images.service import get_image_base64
 
-
-def get_user_image_base64(image_path):
-    localisation_directory = f"{settings.image_scr}/users/{image_path}"
-    try:
-        with open(localisation_directory, "rb") as image_file:
-            return base64.b64encode(image_file.read()).decode('utf-8')
-    except:
-        return None
 
 async def get_activ_lot_info(user: SUser, lot_id: int)->dict:
     data = {
-        'user_data': None,
+        'user_data': await get_user_personal_info(user),
         'activ_lot_data': None,
         'another_data': None
     }
 
 
-    user_data = {
-        "name": user.name,
-        "email": user.email,
-        "ballance": user.ballance,
-        "passport_number": user.passport_number,
-        'surname': user.surname,
-        'telephone': user.telephone,
-        'registered_at': user.registered_at,
-        'description': user.description,
-        'image_base64': get_user_image_base64(user.image)
-    }
+    activ_lot_data = await get_activ_data_list(lot_id=lot_id)
 
-
-    activ_lot_data = await ActivCarsDAO.find_one_or_none(id=lot_id)
-
-    if  activ_lot_data:
-        activ_lot_data = activ_lot_data.to_dict()
-
+    if activ_lot_data:
         current_owner = await UsersDAO.find_one_or_none(id=activ_lot_data['current_owner'])
         if current_owner:
             activ_lot_data['current_owner'] = f"{current_owner.name} {current_owner.surname}"
@@ -53,49 +34,59 @@ async def get_activ_lot_info(user: SUser, lot_id: int)->dict:
         another_data = {
             'owner': f"{owner.name} {owner.surname}",
         }
+
     else:
         another_data = None
 
-    data['user_data'] = user_data
     data['activ_lot_data'] = activ_lot_data
     data['another_data'] = another_data
 
     return data
 
+async def get_property_lot_info(user, lot_id):
+    data = {
+        'user_data': await get_user_personal_info(user),
+        'property_lot_data': None,
+        'another_data': None
+    }
 
+    property_data = await get_property_data_list(lot_id=lot_id)
+    if property_data:
+        owner = await UsersDAO.find_one_or_none(id=property_data['owner'])
+        property_data['owner'] = f"{owner.name} {owner.surname}"
+        data['property_lot_data'] = property_data
+
+
+    return data
+
+async def get_all_data(user: SUser, bool_activ_lots: bool, bool_property_lots: bool):
+    data = {
+        'user_data': await get_user_personal_info(user),
+        'activ_lot_data': None,
+        'property_lot_data': None
+    }
+
+    if bool_activ_lots:
+        data['activ_lot_data'] = await get_activ_data_list()
+
+    if bool_property_lots:
+        data['property_data'] = await get_property_data_list()
+
+    return data
 
 
 async def get_all_user_data(user: SUser, bool_activ_lots: bool, bool_property_lots: bool):
     data = {
-        'user_data': None,
+        'user_data': await get_user_personal_info(user),
         'activ_lot_data': None,
-        'property_data': None
+        'property_lot_data': None
     }
-
-    user_data = {
-        "name": user.name,
-        "email": user.email,
-        "ballance": user.ballance,
-        "passport_number": user.passport_number,
-        'surname': user.surname,
-        'telephone': user.telephone,
-        'registered_at': user.registered_at,
-        'description': user.description,
-        'image_base64': get_user_image_base64(user.image)
-    }
-
-    data['user_data'] = user_data
 
     if bool_activ_lots:
-        activ_lot_data = [car.to_dict() for car in await ActivCarsDAO.find_by_owner(user.id)]
-        if len(activ_lot_data) == 0:
-            activ_lot_data = None
-        data['activ_lot_data'] = activ_lot_data
+        data['activ_lot_data'] = await get_activ_data_list(owner=user.id)
+
 
     if bool_property_lots:
-        property_data = [car.to_dict() for car in await PropertyCarsDAO.find_by_owner(user.id)]
-        if len(property_data) == 0:
-            property_data = None
-        data['property_data'] = property_data
+        data['property_lot_data'] = await get_property_data_list(owner=user.id)
 
     return data

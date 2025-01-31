@@ -5,6 +5,9 @@ from cars.dao import PropertyCarsDAO, ActivCarsDAO
 from users.schemas import SUser
 from users.dao import UsersDAO
 
+from images.service import get_image_base64
+import json
+
 
 async def transfer_activ_to_pasiv(data, car_data, user: SUser):
 
@@ -37,6 +40,77 @@ async def transfer_activ_to_pasiv(data, car_data, user: SUser):
 
     await PropertyCarsDAO.add_one(property_car)
     await ActivCarsDAO.delete_by_id(activ_car['id'])
+
+
+async def get_activ_data_list(lot_id:int = None, owner: int = None) -> dict:
+
+    if lot_id:
+        activ_lot_data = (await ActivCarsDAO.find_one_or_none(id=lot_id)).to_dict()
+    elif owner:
+        activ_lot_data = [car.to_dict() for car in await ActivCarsDAO.find_by_owner(owner)]
+    else:
+        activ_lot_data = [car.to_dict() for car in await ActivCarsDAO.find_all()]
+
+    if not activ_lot_data:
+        return None
+
+    if len(activ_lot_data) == 0:
+        return  None
+
+    if lot_id:
+        images = json.loads(activ_lot_data["images"])
+        base64_images = []
+
+        for image in images:
+            base64_images.append(get_image_base64(f"cars/{image}"))
+        activ_lot_data['images'] = base64_images
+
+    else:
+        for lot in activ_lot_data:
+            images = json.loads(lot["images"])
+
+            if len(images) == 0:
+                image = None
+            else:
+                lot['image'] = get_image_base64(f"cars/{images[0]}")
+
+    return activ_lot_data
+
+
+async def get_property_data_list(lot_id: int = None, owner: int = None) -> dict:
+    if lot_id:
+        property_lot_data = (await PropertyCarsDAO.find_one_or_none(id=lot_id)).to_dict()
+    elif owner:
+        property_lot_data = [car.to_dict() for car in await PropertyCarsDAO.find_by_owner(owner)]
+    else:
+        property_lot_data = [car.to_dict() for car in await PropertyCarsDAO.find_all()]
+
+    if not property_lot_data:
+        return None
+
+    if len(property_lot_data) == 0:
+        return None
+
+    if lot_id:
+        images = json.loads(property_lot_data["images"])
+        base64_images = []
+
+        for image in images:
+            base64_images.append(get_image_base64(f"cars/{image}"))
+        property_lot_data['images'] = base64_images
+
+    else:
+        for lot in property_lot_data:
+            images = json.loads(lot["images"])
+
+            if len(images) == 0:
+                image = None
+            else:
+                lot['image'] = get_image_base64(f"cars/{images[0]}")
+
+    return property_lot_data
+
+
 
 """from modules.database import async_session_maker
 from sqlalchemy.sql import select
