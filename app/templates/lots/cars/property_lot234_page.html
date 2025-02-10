@@ -5,20 +5,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>mainpage</title>
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic&amp;display=swap">
-    <link rel="stylesheet" href="../assets/css/swiper-icons.css">
-    <link rel="stylesheet" href="../assets/css/Banner-Heading-Image-images.css">
-    <link rel="stylesheet" href="../assets/css/Login-Form-Basic-icons.css">
-    <link rel="stylesheet" href="../assets/css/Simple-Slider-swiper-bundle.min.css">
-    <link rel="stylesheet" href="../assets/css/Simple-Slider.css">
+    <link rel="stylesheet" href="../../assets/css/swiper-icons.css">
+    <link rel="stylesheet" href="../../assets/css/Banner-Heading-Image-images.css">
+    <link rel="stylesheet" href="../../assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="../../assets/css/Simple-Slider-swiper-bundle.min.css">
+    <link rel="stylesheet" href="../../assets/css/Simple-Slider.css">
 </head>
 
-<body>
+<body style="font-size: 16px;">
     <nav class="navbar navbar-expand bg-light">
-        <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"></button>
-            <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-2" style="position: static;">
-                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}} р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/actions">Торговать</a></div>
+        <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"></button>
+            <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-1" style="position: static;">
+                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}}р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/personal_account">личный кабинет</a></div>
             </div>
         </div>
     </nav>
@@ -31,80 +31,58 @@
             </div>
         </div>
     </section>
-    <section class="mx-auto position-relative py-4 py-xl-5">
+    <section class="position-relative py-4 py-xl-5">
         <div class="container">
-            <div class="d-grid d-print-flex d-sm-grid d-md-grid d-lg-flex d-xl-flex d-xxl-flex" style="display: inline-flex;">
-                <div><img width="300" height="300" style="width: 300px;height: 300px;margin-right: 0px;" src="data:image/jpeg;base64,{{ data.user_data.image_base64 }}"></div>
-                <div style="padding-left: 0px;display: grid;margin-left: 10px;"><strong style="font-size: 34px;">Информация о вас:</strong><strong>Имя: {{data.user_data.name}}</strong><strong>Фамилия: {{data.user_data.surname}}</strong><strong>Номер паспорта: {{data.user_data.passport_number}}</strong><strong>Балланс: {{data.user_data.ballance}}</strong></div>
-                <div style="padding-left: 10px;display: grid;"><strong></strong><strong>Email: {{data.user_data.email}}</strong><strong>Номер телефона: {{data.user_data.telephone}}</strong><strong>Дата регистрации: {{data.user_data.registered_at}}</strong><strong><a class="btn btn-primary ms-auto" role="button" href="/pages/change_info_about_me">Изменить информацию о себе</a></strong><strong></strong>
-                    <form action="/auth/logout_api" method="post"><button class="btn btn-primary" type="submit" style="margin-right: 0px;background: #e04d5b;" onclick="window.location.href=&#39;/pages/login&#39;">Выйти из аккаунта</button></form>
+            <div class="row mb-5">
+                <div class="col"><strong style="font-size: 31px;">Лот {{data.activ_lot_data.id}}</strong></div>
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <p class="w-lg-50"></p>
                 </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col"><strong style="font-size: 31px;">&nbsp;{{data.activ_lot_data.name}}</strong></div>
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <p class="w-lg-50"></p>
+                </div>
+            </div>
+        </div>
+        <div class="simple-slider">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat;"></div>
+                    <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat;"></div>
+                    <div class="swiper-slide" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;) center center / cover no-repeat;"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
         </div>
     </section>
     <section class="position-relative py-4 py-xl-5">
         <div class="container">
-            <div class="row mb-5">
-                <div class="col"><strong>Описание: {{data.user_data.description}}</strong></div>
-                <div class="col-md-8 col-xl-6 text-center mx-auto">
-                    <p class="w-lg-50"></p>
-                </div>
+            <div style="display: grid;margin-left: 40px;"><strong style="font-size: 20px;margin-bottom: 10px;">Марка: {{data.property_data.brand}}</strong><strong style="font-size: 20px;margin-bottom: 10px;">Модель: {{data.property_data.model}}</strong><strong style="font-size: 20px;">Кузов: {{data.property_data.body}}</strong></div>
+            <div style="margin-top: 60px;margin-bottom: 40px;margin-left: 20px;"><strong style="font-size: 20px;margin-bottom: 0px;">Описание: {{data.property_data.description}}</strong></div>
+            <div class="d-flex" style="margin-left: 40px;">
+                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Тип двигателя: {{data.property_data.fuel_type}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Обьем Двигателя: {{data.property_data.engine_volume}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Мощность: {{data.property_data.power}} лс.</strong><strong style="font-size: 20px;margin-bottom: 0px;">Описание: {{data.<strong>property_data</strong>.description}}</strong></div>
+                <div class="d-grid" style="margin-left: 40px;"><strong style="font-size: 20px;margin-bottom: 0px;">Год: {{data.property_data.year}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Пробег: {{data.property_data.range}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Тип коробки: {{data.property_data.gear_type}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Регистрация: {{data.<strong>property_data</strong>.registration}}</strong></div>
             </div>
+            <div class="d-flex" style="margin-left: 40px;margin-top: 40px;height: 120px;">
+                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Владелец: {{data.property_data.owner}}</strong></div>
+            </div>
+            <div></div>
         </div>
     </section>
-    <section class="py-4 py-xl-5">
+    <section class="position-relative py-4 py-xl-5">
         <div class="container">
-            <div class="row mb-5">
-                <div class="col-md-8 col-xl-6 text-center mx-auto">
-                    <p class="w-lg-50"></p>
-                </div>
-            </div><strong style="font-size: 28px;">Ваши активные лоты:</strong>
-        </div><code>{% if data.activ_lot_data %}</code><code>{% for locdata in data.activ_lot_data%}</code>
-        <div class="container" style="margin-bottom: 30px;margin-top: 20px;">
-            <div class="bg-dark border rounded border-0 border-dark overflow-hidden">
-                <div class="row g-0">
-                    <div class="col-md-6">
-                        <div class="text-white p-4 p-md-5" style="min-height: 470px;">
-                            <h2 class="fw-bold text-white mb-3">ЛОТ {{locdata.id}}</h2>
-                            <p class="mb-4">{{locdata.description}}</p>
-                            <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"></div>
-                            <div class="my-3 pb-0 mb-1" style="display: inline-grid;height: 51px;width: auto;">
-                                <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;height: 51px;margin-right: 0px;"><strong>Начальная цена: {{locdata.start_price}}</strong><strong>Цена выкупа: {{locdata.buy_price}}</strong><strong>Текущая ставка: {{locdata.current_price}}</strong></div><a class="btn btn-primary btn-lg" role="button" href="/pages/activ_lot_page/{{locdata.id}}" style="max-width: 182px;margin-top: 40px;">Перейти</a>
-                                <div style="margin-top: 27px;"><strong style="margin-right: 94px;">Начало: {{locdata.start_date}}</strong><strong style="transform: translateX(176px);">Конец: {{locdata.end_date}}</strong></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="data:image/jpeg;base64,{{ locdata.image }}"></div>
-                </div>
+            <div class="d-flex" style="margin-left: 40px;">
+                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Дата приобретения: {{data.property_data.buy_date}}</strong><strong style="font-size: 20px;margin-bottom: 0px;">Начальная цена: {{data.property_data.start_price}}</strong></div>
             </div>
-        </div><code>{% endfor %}</code><code>{% else %}</code><strong>Нет активных лотов(</strong><code>{% endif %}</code>
-    </section>
-    <section class="py-4 py-xl-5">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-md-8 col-xl-6 text-center mx-auto">
-                    <p class="w-lg-50"></p>
-                </div>
-            </div><strong style="font-size: 28px;">Ваши приобритения:</strong>
-        </div><code>{% if data.property_lot_data %}</code><code>{% for locdata in data.property_lot_data %}</code>
-        <div class="container" style="margin-bottom: 30px;margin-top: 20px;">
-            <div class="bg-dark border rounded border-0 border-dark overflow-hidden">
-                <div class="row g-0">
-                    <div class="col-md-6">
-                        <div class="text-white p-4 p-md-5" style="min-height: 470px;">
-                            <h2 class="fw-bold text-white mb-3">ЛОТ {{locdata.id}}</h2>
-                            <p class="mb-4">{{locdata.description}}</p>
-                            <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"></div>
-                            <div class="my-3 pb-0 mb-1" style="display: inline-grid;height: 51px;width: auto;">
-                                <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;height: 51px;margin-right: 0px;"><strong>Цена: {{locdata.price}}</strong></div><a class="btn btn-primary btn-lg" role="button" href="/pages/property_lot_page/{{locdata.id}}" style="max-width: 182px;margin-top: 40px;">Перейти</a>
-                                <div style="margin-top: 27px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 order-first order-md-last" style="min-height: 250px;"><img class="w-100 h-100 fit-cover" src="data:image/jpeg;base64,{{ locdata.image }}"></div>
-                </div>
+            <div class="d-flex" style="margin-left: 40px;margin-top: 40px;height: 120px;">
+                <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;">Владелец: {{data.property_data.owner}}</strong></div>
             </div>
-        </div><code>{% endfor %}</code><code>{% else %}</code><strong>Нет активных лотов(</strong><code>{% endif%}</code>
+            <div></div>
+        </div>
     </section>
     <section class="position-relative py-4 py-xl-5">
         <div class="container">
@@ -167,11 +145,11 @@
             </div>
         </div>
     </footer>
-    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../assets/js/bs-init.js"></script>
-    <script src="../assets/js/scripts.js"></script>
-    <script src="../assets/js/Simple-Slider-swiper-bundle.min.js"></script>
-    <script src="../assets/js/Simple-Slider.js"></script>
+    <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/bs-init.js"></script>
+    <script src="../../assets/js/scripts.js"></script>
+    <script src="../../assets/js/Simple-Slider-swiper-bundle.min.js"></script>
+    <script src="../../assets/js/Simple-Slider.js"></script>
 </body>
 
 </html>
