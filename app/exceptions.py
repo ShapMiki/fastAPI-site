@@ -13,3 +13,11 @@ class IncorrectEmailOrPassword(HTTPException):
         super().__init__(status_code=self.status_code, detail=self.detail)
 
 
+class NotFound(HTTPException):
+    status_code = status.HTTP_404_NOT_FOUND
+    detail = "We cand found, what you fetch"
+
+    def __init__(self):
+        super().__init__(status_code=self.status_code, detail=self.detail)
+
+

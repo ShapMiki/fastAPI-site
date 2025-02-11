@@ -1,3 +1,4 @@
+
 async function submitForm_and_foto() {
     // Останавливаем стандартное поведение формы
     event.preventDefault();

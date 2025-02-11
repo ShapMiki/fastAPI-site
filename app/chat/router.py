@@ -8,8 +8,9 @@ router = APIRouter(
 )
 
 
-@router.websocket("/{chat_id}")
+@router.websocket("/ws/{chat_id}")
 async def websocket_endpoint(websocket: WebSocket, chat_id: int):
+    print("OK")
     await manager.connect(websocket)
     try:
         while True:

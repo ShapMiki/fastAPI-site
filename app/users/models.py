@@ -1,5 +1,9 @@
 from sqlalchemy import Column, Integer, String, Double, Computed, Date, ARRAY
+from sqlalchemy.orm import relationship
+
 from modules.database import Base
+from association.associations import chat_user_association
+
 from datetime import datetime
 
 
@@ -34,7 +38,7 @@ class Users(Base):
     ballance = Column(Double, default=0,  nullable=False)
     image = Column(String, default='none_user_photo.jpg')
 
-    chat_list = Column(ARRAY(Integer))
+    chats = relationship('Chat', secondary=chat_user_association, back_populates='owners')
 
 """class Property(Base):
     __tablename__ = 'property'

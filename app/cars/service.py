@@ -8,6 +8,8 @@ from users.dao import UsersDAO
 from images.service import get_image_base64
 import json
 
+from datetime import datetime, timedelta
+from config import settings
 
 async def transfer_activ_to_pasiv(data, car_data, user: SUser):
 
@@ -37,6 +39,7 @@ async def transfer_activ_to_pasiv(data, car_data, user: SUser):
             pass
 
     setattr(property_car, 'owner', user.id)
+    setattr(property_car, 'buy_date', datetime.utcnow())
 
     await PropertyCarsDAO.add_one(property_car)
     await ActivCarsDAO.delete_by_id(activ_car['id'])
@@ -64,9 +67,13 @@ async def get_activ_data_list(lot_id:int = None, owner: int = None) -> dict:
         for image in images:
             base64_images.append(get_image_base64(f"cars/{image}"))
         activ_lot_data['images'] = base64_images
-
+        activ_lot_data["start_date"] += timedelta(hours=settings.hour_zone)
+        activ_lot_data["end_date"] += timedelta(hours=settings.hour_zone)
     else:
         for lot in activ_lot_data:
+            lot["start_date"] += timedelta(hours=settings.hour_zone)
+            lot["end_date"] += timedelta(hours=settings.hour_zone)
+
             images = json.loads(lot["images"])
 
             if len(images) == 0:
@@ -98,9 +105,18 @@ async def get_property_data_list(lot_id: int = None, owner: int = None) -> dict:
         for image in images:
             base64_images.append(get_image_base64(f"cars/{image}"))
         property_lot_data['images'] = base64_images
+        try:
+            property_lot_data["buy_date"] += timedelta(hours=settings.hour_zone)
+        except:
+            pass
 
     else:
         for lot in property_lot_data:
+            try:
+                lot["buy_date"] += timedelta(hours=settings.hour_zone)
+            except:
+                pass
+
             images = json.loads(lot["images"])
 
             if len(images) == 0:

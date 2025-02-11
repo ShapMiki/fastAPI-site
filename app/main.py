@@ -7,12 +7,13 @@ from cars.router import router as cars_router
 from users.router import router as users_router
 from pages.router import router as pages_router
 from images.router import router as images_router
+from chat.router import router as chats_router
 
 from config import settings
 from scheduler import Scheduler
 
 #uvicorn app.main:app --reload
-#uvicorn app.main:app --host  0.0.0.0 --port 3333 --reload
+#uvicorn app.main:app --host  87.252.252.226 --port 3333 --reload
 
 
 
@@ -26,6 +27,9 @@ app.include_router(users_router)
 app.include_router(cars_router)
 app.include_router(pages_router)
 app.include_router(images_router)
+app.include_router(chats_router)
+
+
 
 scheduler = Scheduler()
 
@@ -37,6 +41,8 @@ def read_root():
 origins = [
     "http://localhost",
     "http://localhost:8080"
+    "http://shap.software",
+    "http://87.252.252.226:3333"
     ]
 
 

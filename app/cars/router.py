@@ -15,6 +15,8 @@ from users.dao import UsersDAO
 
 from datetime import datetime
 
+from config import settings
+
 router = APIRouter(
     prefix="/cars",
     tags=["cars"],
@@ -47,16 +49,16 @@ async def register(response: Response, car_id, data: SUppPrice, user: SUser = De
         raise HTTPException(status_code=404, detail="Car not found")
 
     if car_data.start_date > datetime.utcnow():
-        raise HTTPException(status_code=400, detail="Auction not started")
+        raise HTTPException(status_code=401, detail="Auction not started")
 
     if car_data.owner == user.id:
-        raise HTTPException(status_code=400, detail="You can't buy your own car")
+        raise HTTPException(status_code=402, detail="You can't buy your own car")
 
     if car_data.current_owner == user.id:
-        raise HTTPException(status_code=400, detail="You already own this car")
+        raise HTTPException(status_code=403, detail="You already own this car")
 
     if user.ballance < data.price:
-        raise HTTPException(status_code=400, detail="Not enough money")
+        raise HTTPException(status_code=405, detail="Not enough money")
 
 
     elif car_data.buy_price <= data.price and car_data.buy_price != 0:

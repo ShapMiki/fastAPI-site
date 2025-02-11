@@ -41,7 +41,7 @@ class ActivCars(Base):
     start_price = Column(Double,  default=0, nullable=False)
     current_price = Column(Double, default=0, nullable=False)
     buy_price = Column(Double, default=float('inf'), nullable=False)
-    price_step = Column(Double)
+    price_step = Column(Double, default=float(0), nullable=False)
 
     start_date = Column(DateTime)
     end_date = Column(DateTime)

@@ -13,6 +13,7 @@ from users.auth import get_password_hash, verify_password, authenticate_user, cr
 from users.dependencies import get_current_user
 
 from exceptions import *
+from config import settings
 
 router = APIRouter(
     prefix="/auth",

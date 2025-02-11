@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field, field_validator, model_validator
 from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from typing import Optional
+from config import settings
 
 """class SCar(BaseModel):
     id: int
@@ -105,12 +106,10 @@ class SUpLoadActivCars(BaseModel):
         if isinstance(value, str):
             for fmt in ('%Y-%m-%d', '%d-%m-%Y', '%d/%m/%Y', '%Y/%m/%d', '%d.%m.%Y', '%Y.%m.%d'):
                 try:
-                    return datetime.strptime(value, fmt).date()
+                    return (datetime.strptime(value, fmt).date() - timedelta(hours=settings.hour_zone))
                 except ValueError:
                     continue
-            raise ValueError(f"Date format for {value} is not supported")
-        return value
-
+            return None
 
     @field_validator('start_price', 'buy_price', 'price_step', mode='before')
     def validate_prices(cls, value, field):
@@ -138,7 +137,7 @@ class SUpLoadActivCars(BaseModel):
             values.start_date = datetime.utcnow()
             values.start_date = datetime.combine(values.start_date, datetime.strptime(values.start_time, '%H:%M').time())
         elif not values.start_date:
-            values.start_date = datetime.utcnow()
+            values.start_date = datetime.utcnow() - timedelta(hours=settings.hour_zone)
 
         if values.end_date and values.end_time:
             values.end_date = datetime.combine(values.end_date, datetime.strptime(values.end_time, '%H:%M').time())
@@ -152,9 +151,11 @@ class SUpLoadActivCars(BaseModel):
             if values.start_date < datetime.utcnow():
                 values.start_date = datetime.utcnow()
 
+
         if values.end_date:
             if values.end_date < datetime.utcnow():
                 values.end_date = datetime.utcnow() + timedelta(days=1)
+
 
         if values.start_date and values.end_date:
             if values.end_date < values.start_date:
@@ -169,6 +170,8 @@ class SUpLoadActivCars(BaseModel):
             if values.start_price > values.buy_price:
                 values.buy_price = 0
 
+        values.start_date = values.start_date.replace(second=0, microsecond=0)
+        values.end_date = values.end_date.replace(second=0, microsecond=0)
         return values
 
 

@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     hour_zone: int
     secret_key_for_jwt: str
     algorithm_for_jwt: str
+    domain: str
+    web_path: str
 
     @model_validator(mode="before")
     @classmethod

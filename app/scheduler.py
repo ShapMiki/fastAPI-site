@@ -5,6 +5,7 @@ from cars.models import PropertyCars
 
 from users.dao import UsersDAO
 
+from datetime import datetime
 
 class Scheduler:
     def __init__(self):
@@ -51,6 +52,7 @@ class Scheduler:
                     pass
 
             setattr(property_car, 'owner', activ_car['current_owner'])
+            setattr(property_car, 'buy_date', datetime.utcnow())
 
 
             await PropertyCarsDAO.add_one(property_car)
