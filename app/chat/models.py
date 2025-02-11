@@ -24,6 +24,8 @@ class Message(Base):
 
     id = Column(Integer, primary_key=True)
 
+    owner = Column(Integer, ForeignKey('users.id'), nullable=False)
+
     text = Column(String, nullable=False)
 
     sending_date = Column(DateTime)
