@@ -71,6 +71,14 @@ async def load_action_page(request: Request, responce: Response, user: SUser = D
     return templates.TemplateResponse("lots/action_page.html", {"request": request, "data": data})
 
 
+@router.get("/up_ballance")
+async def load_up_ballance_page(request: Request, user: SUser = Depends(get_current_user)):
+
+    if not user:
+        return RedirectResponse(url="/pages/login")
+
+    return templates.TemplateResponse("other/payments_page.html", {"request": request})
+
 """
 @router.get('/main/{id}')
 def show_main(request: Request):
@@ -106,6 +114,7 @@ async def activ_lot_page(lot_id: int, request: Request, responce: Response, user
 
 @router.get('/property_lot_page/{lot_id}')
 async def property_lot_page(lot_id: int, request: Request, responce: Response, user: SUser = Depends(get_current_user)):
+
     if not user:
         return RedirectResponse(url="/pages/login")
 

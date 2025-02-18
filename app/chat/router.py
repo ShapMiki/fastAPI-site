@@ -1,6 +1,7 @@
 from fastapi import APIRouter, WebSocket
 
-from chats.service import manager
+from chat.service import manager
+from chat.service import manager
 
 router = APIRouter(
     prefix="/chat",

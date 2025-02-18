@@ -7,7 +7,7 @@ from cars.router import router as cars_router
 from users.router import router as users_router
 from pages.router import router as pages_router
 from images.router import router as images_router
-from chat.router import router as chats_router
+#from chat.router import router as chats_router #В разработке
 
 from config import settings
 from scheduler import Scheduler
@@ -27,7 +27,7 @@ app.include_router(users_router)
 app.include_router(cars_router)
 app.include_router(pages_router)
 app.include_router(images_router)
-app.include_router(chats_router)
+#app.include_router(chats_router) #В разработке
 
 
 
