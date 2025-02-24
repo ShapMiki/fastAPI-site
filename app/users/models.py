@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Double, Computed, Date, ARRAY
+from sqlalchemy import Column, Integer, DateTime, String, Double, Computed, Date, ARRAY
 from sqlalchemy.orm import relationship
 
 from modules.database import Base
@@ -6,6 +6,7 @@ from association.associations import chat_user_association
 
 from datetime import datetime
 
+from chat.models import Chat
 
 class Users(Base):
     __tablename__ = 'users'
@@ -20,8 +21,8 @@ class Users(Base):
     description = Column(String)
 
     telephone = Column(String)
-    registered_at = Column(Date , default=datetime.utcnow(), nullable=False)
-    last_seance = Column(Date, default=datetime.utcnow(), nullable=False)
+    registered_at = Column(DateTime , default=datetime.utcnow(), nullable=False)
+    last_seance = Column(DateTime, default=datetime.utcnow(), nullable=False)
     passport_number = Column(String, unique=True)
 
     password = Column(String, nullable=False)
@@ -30,7 +31,7 @@ class Users(Base):
 
     like_property_cars = Column(String, default='[]', nullable=False)
 
-    #last_lot_time = Column(Date, default=datetime.utcnow(), nullable=False) #время последнего лота, чтобы не было спама
+    last_lot_time = Column(DateTime, default=datetime.utcnow(), nullable=False) #время последнего лота, чтобы не было спама
 
     verefy_email = Column(String, default='False', nullable=False)
     verefy_passport = Column(String, default='False', nullable=False)

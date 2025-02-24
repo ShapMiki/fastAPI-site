@@ -20,31 +20,11 @@ router = APIRouter(
 templates = Jinja2Templates(directory="templates")
 
 
-@router.get('/registrate')
-def load_registrate_page(request: Request):
-    return templates.TemplateResponse("user/registrate_page.html", {"request": request, 'settings': {'web_path': settings.web_path}})
-
-
-@router.get('/login')
-def load_registrate_page(request: Request):
-    return templates.TemplateResponse("user/login_page.html", {"request": request, 'settings': {'web_path': settings.web_path}})
-
-
 @router.get('/')
 async def show_index(request: Request, user: SUser = Depends(get_current_user)):
 
     if user:
-        user_data = {
-            "name": user.name,
-            "email": user.email,
-            "ballance": user.ballance,
-            "passport_number": user.passport_number
-        }
-        data={
-            'user_data': user_data,
-            'activ_lot_data': None,
-            'property_data': None
-        }
+        data = await get_all_data(user, False, False)
     else:
         data = {
             'user_data': None,
@@ -55,11 +35,19 @@ async def show_index(request: Request, user: SUser = Depends(get_current_user)):
     return templates.TemplateResponse("index.html", {"request": request, 'data': data})
 
 
+@router.get('/registrate')
+def load_registrate_page(request: Request):
+    return templates.TemplateResponse("user/registrate_page.html", {"request": request, 'settings': {'web_path': settings.web_path}})
+
+
+@router.get('/login')
+def load_registrate_page(request: Request):
+    return templates.TemplateResponse("user/login_page.html", {"request": request, 'settings': {'web_path': settings.web_path}})
+
+
 @router.get('/action_page')
 async def redirect_action_page():
     return RedirectResponse(url="/pages/actions")
-
-
 @router.get('/actions')
 async def load_action_page(request: Request, responce: Response, user: SUser = Depends(get_current_user)):
 
@@ -71,31 +59,17 @@ async def load_action_page(request: Request, responce: Response, user: SUser = D
     return templates.TemplateResponse("lots/action_page.html", {"request": request, "data": data})
 
 
-@router.get("/up_ballance")
-async def load_up_ballance_page(request: Request, user: SUser = Depends(get_current_user)):
+
+
+@router.get('/lot_load')
+async def lot_load(request: Request, responce: Response, user: SUser = Depends(get_current_user)):
 
     if not user:
         return RedirectResponse(url="/pages/login")
 
-    return templates.TemplateResponse("other/payments_page.html", {"request": request})
+    data = await get_all_user_data(user,True, False)
 
-"""
-@router.get('/main/{id}')
-def show_main(request: Request):
-    return templates.TemplateResponse("main.html", {"request": request, "id": id})
-
-"""
-
-@router.get('/change_info_about_me')
-async def change_info_about_me(request: Request, responce: Response, user: SUser_personal_info = Depends(get_current_user)):
-
-    if not user:
-        return RedirectResponse(url="/pages/login")
-
-    data = await get_all_user_data(user, False, False)
-
-
-    return templates.TemplateResponse("user/change_info_about_me_page.html", {"request": request, "data": data})
+    return templates.TemplateResponse("lots/cars/lot_load_page.html", {"request": request, "data": data})
 
 
 @router.get('/activ_lot_page/{lot_id}')
@@ -127,19 +101,6 @@ async def property_lot_page(lot_id: int, request: Request, responce: Response, u
 
 
 
-@router.get('/lot_load')
-async def lot_load(request: Request, responce: Response, user: SUser = Depends(get_current_user)):
-
-    if not user:
-        return RedirectResponse(url="/pages/login")
-
-    data = await get_all_user_data(user,True, False)
-
-    return templates.TemplateResponse("lots/cars/lot_load_page.html", {"request": request, "data": data})
-
-
-
-
 
 
 @router.get('/personal_account')
@@ -151,3 +112,46 @@ async def  load_personal_account(request: Request, responce: Response, user: SUs
 
     return templates.TemplateResponse("user/personal_account_page.html", {"request": request, "data": data})
 
+
+@router.get('/change_info_about_me')
+async def change_info_about_me(request: Request, responce: Response, user: SUser_personal_info = Depends(get_current_user)):
+
+    if not user:
+        return RedirectResponse(url="/pages/login")
+
+    data = await get_all_user_data(user, False, False)
+
+
+    return templates.TemplateResponse("user/change_info_about_me_page.html", {"request": request, "data": data})
+
+
+@router.get("/up_ballance")
+async def load_up_ballance_page(request: Request, user: SUser = Depends(get_current_user)):
+
+    if not user:
+        return RedirectResponse(url="/pages/login")
+
+    data = await get_all_data(user, False, False)
+
+    return templates.TemplateResponse("other/payments_page.html", {"request": request, "data": data})
+
+@router.get("/chats")
+async def load_chats_page(request: Request, user: SUser = Depends(get_current_user)):
+
+    if not user:
+        return RedirectResponse(url="/pages/login")
+
+    data = await get_users_chats_data(user)
+    print(data)
+    return templates.TemplateResponse("user/communicate/chats.html", {"request": request, "data": data})
+
+
+@router.get("/chat/{chat_id}")
+async def load_chat_page(chat_id: int, request: Request, user: SUser = Depends(get_current_user)):
+    pass
+"""
+@router.get('/main/{id}')
+def show_main(request: Request):
+    return templates.TemplateResponse("main.html", {"request": request, "id": id})
+
+"""

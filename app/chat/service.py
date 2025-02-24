@@ -1,22 +1,13 @@
-from fastapi import WebSocket
 
 
-class ConnectionManager:
-    def __init__(self):
-        self.active_connections: list[WebSocket] = []
 
-    async def connect(self, websocket: WebSocket):
-        await websocket.accept()
-        self.active_connections.append(websocket)
+async def get_chat_data(user: SUser, chat_id: int):
+    data = {
+        'user_data': await get_user_personal_info(user),
+        'chat_data': None
+    }
+    chat_data = await ChatsDAO.find_one_or_none(id=chat_id)
+    if chat_data:
+        data['chat_data'] = chat_data
 
-    def disconnect(self, websocket: WebSocket):
-        self.active_connections.remove(websocket)
-
-    async def send_personal_message(self, message: str, websocket: WebSocket):
-        await websocket.send_text(message)
-
-    async def broadcast(self, message: str):
-        for connection in self.active_connections:
-            await connection.send_text(message)
-
-manager = ConnectionManager()
+    return data

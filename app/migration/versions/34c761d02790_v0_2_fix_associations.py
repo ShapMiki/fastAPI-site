@@ -1,8 +1,8 @@
-"""update user model, image space
+"""v0.2 fix associations 
 
-Revision ID: 5c4c31e9a67e
-Revises: 10606cbc79ea
-Create Date: 2025-01-22 15:34:29.191826
+Revision ID: 34c761d02790
+Revises: 980272d420d7
+Create Date: 2025-02-24 20:24:14.541267
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '5c4c31e9a67e'
-down_revision: Union[str, None] = '10606cbc79ea'
+revision: str = '34c761d02790'
+down_revision: Union[str, None] = '980272d420d7'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

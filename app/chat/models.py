@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Computed, Double, DateTime
 from sqlalchemy.orm import relationship
 from modules.database import Base
-from association.associations import chat_user_association, chat_message_association
 
+from association.associations import chat_user_association, chat_message_association
 
 class Chat(Base):
     __tablename__ = 'chat'
@@ -15,7 +15,6 @@ class Chat(Base):
 
     owners = relationship('Users', secondary=chat_user_association, back_populates='chats')
     messages_id = relationship('Message',secondary=chat_message_association, back_populates='chat_id')
-
 
 
 class Message(Base):
@@ -33,6 +32,7 @@ class Message(Base):
     is_read = Column(String, default='False', nullable=False)
 
     chat_id = relationship("Chat", secondary=chat_message_association, back_populates='messages_id')
+
 
 
 
