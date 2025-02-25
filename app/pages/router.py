@@ -136,7 +136,7 @@ async def load_up_ballance_page(request: Request, user: SUser = Depends(get_curr
     return templates.TemplateResponse("other/payments_page.html", {"request": request, "data": data})
 
 @router.get("/chats")
-async def load_chats_page(request: Request, user: SUser = Depends(get_current_user)):
+async def load_chats_page(request: Request, user = Depends(get_current_user)):
 
     if not user:
         return RedirectResponse(url="/pages/login")

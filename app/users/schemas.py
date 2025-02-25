@@ -11,8 +11,6 @@ class SUser(BaseModel):
     class Config:
         orm_mode = True
 
-
-#ЗАебауся я с этии тупым файлом
 class SUserUpdate(BaseModel):
     name: str = Field(..., min_length=1, max_length=50)
     surname: Optional[str] = Field(None, min_length=1, max_length=50)
@@ -21,7 +19,6 @@ class SUserUpdate(BaseModel):
 
     class Config:
         orm_mode = True
-
 
 
 class SUser_personal_info(BaseModel):

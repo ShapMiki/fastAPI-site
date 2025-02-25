@@ -6,6 +6,9 @@ from cars.service import *
 from users.dao import UsersDAO
 from users.service import get_user_personal_info
 
+from chat.dao import *
+from chat.service import *
+
 from config import settings
 import json
 
@@ -91,13 +94,13 @@ async def get_all_user_data(user: SUser, bool_activ_lots: bool, bool_property_lo
 
     return data
 
-async def get_users_chats_data(user: SUser):
+async def get_users_chats_data(user):
     data = {
         'user_data': await get_user_personal_info(user),
         'chats_data': None
     }
 
-    #chats = await get_chats_list(user.id)
+    chats = await get_chats_list(user)
     chats = [
         {
             'id': 1,

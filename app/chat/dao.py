@@ -1,5 +1,5 @@
 from dao.base import BaseDAO
-from chat.modelss import Chat, Message
+from chat.models import Chat, Message
 
 
 
