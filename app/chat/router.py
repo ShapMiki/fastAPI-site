@@ -1,12 +1,35 @@
-from fastapi import APIRouter, WebSocket
+from fastapi import APIRouter, WebSocket, Depends
 
-from chat.service import manager
-from chat.service import manager
+from users.schemas import SUser, SUserLogin, SUser_personal_info
+from users.dependencies import get_current_user
+from users.dao import UsersDAO
+
+from exceptions import *
+
+from chat.service import *
+
+from exceptions import NotFound
 
 router = APIRouter(
     prefix="/chat",
     tags=["chat"],
 )
+
+@router.post("/create_chat_api/{user_id}")
+async def create_chat_api(user_id: int, user: SUser = Depends(get_current_user)):
+    second_user = await UsersDAO.find_one_or_none(id=user_id)
+    if user and second_user:
+        await create_chat(user, second_user )
+    else:
+        return NotFound
+
+
+@router.post("send_message_api/{chat_id}")
+async def send_message_api(chat_id: int, message: str, user: SUser = Depends(get_current_user)):
+    if user:
+        await send_message(user, chat_id, message)
+    else:
+        return NotFound
 
 
 @router.websocket("/ws/{chat_id}")

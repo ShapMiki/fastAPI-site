@@ -97,29 +97,13 @@ async def get_all_user_data(user: SUser, bool_activ_lots: bool, bool_property_lo
 async def get_users_chats_data(user):
     data = {
         'user_data': await get_user_personal_info(user),
-        'chats_data': None
+        'chats_data': await ChatDAO.get_chats_list(user)
     }
-
-    chats = await get_chats_list(user)
-    chats = [
-        {
-            'id': 1,
-            'name': 'Chat 1',
-            'description': 'Description 1',
-            'image': '',   #get_image_base64('chats/chat1.jpg')
-            'last_message': 'ты козел'
-        },
-        {
-            'id': 2,
-            'name': 'Chat 2',
-            'description': 'Description 2',
-            'image': '', #get_image_base64('chats/chat2.jpg')
-            'last_message': 'я не козел'
-        }
-    ]
-    data['chats_data'] = chats
 
     return data
 
-async def get_users_chat_data(user: SUser):
-    pass
+async def get_users_chat_data(user: SUser, chat_id: int):
+    data = {
+        'user_data': await get_user_personal_info(user),
+        'chats_data': await ChatDAO.get_chat_info(user, chat_id)
+    }

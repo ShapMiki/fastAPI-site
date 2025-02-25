@@ -38,6 +38,7 @@ async def get_current_user(token: str = Depends(get_token)):
         return None
 
     user = await UsersDAO.find_by_id(int(user_id))
+
     if not user:
         print("User not")
         return None

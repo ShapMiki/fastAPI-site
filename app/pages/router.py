@@ -148,7 +148,14 @@ async def load_chats_page(request: Request, user = Depends(get_current_user)):
 
 @router.get("/chat/{chat_id}")
 async def load_chat_page(chat_id: int, request: Request, user: SUser = Depends(get_current_user)):
-    pass
+    if not user:
+        return RedirectResponse(url="/pages/login")
+
+    if check_chat_user(user, chat_id):
+        data = await get_chat_data(user, chat_id)
+        return templates.TemplateResponse("user/communicate/chat.html", {"request": request, "data": data})
+
+    return templates.TemplateResponse("user/communicate/chat.html", {"request": request, "data": data})
 """
 @router.get('/main/{id}')
 def show_main(request: Request):

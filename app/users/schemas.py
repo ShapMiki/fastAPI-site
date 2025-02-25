@@ -11,6 +11,14 @@ class SUser(BaseModel):
     class Config:
         orm_mode = True
 
+class SUserSecurityChat(BaseModel):
+    email: EmailStr
+    name: str
+    surname: str
+    telephone: str
+    balance: float
+    chats: list
+
 class SUserUpdate(BaseModel):
     name: str = Field(..., min_length=1, max_length=50)
     surname: Optional[str] = Field(None, min_length=1, max_length=50)
