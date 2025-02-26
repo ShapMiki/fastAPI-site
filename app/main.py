@@ -43,7 +43,8 @@ origins = [
     "http://localhost",
     "http://localhost:8080"
     "http://shap.software",
-    "http://87.252.252.226:3333"
+    "http://87.252.252.226:3333",
+    "http://192.168.1.100"
     ]
 
 

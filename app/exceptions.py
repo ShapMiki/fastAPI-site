@@ -1,5 +1,11 @@
 from fastapi import  HTTPException, status
 
+class Fobridden(HTTPException):
+    status_code = status.HTTP_403_FORBIDDEN
+    detail = "You are not allowed to do this action"
+    def __init__(self):
+        super().__init__(status_code=self.status_code, detail=self.detail)
+
 class UserAlreadyExists(HTTPException):
     status_code = status.HTTP_409_CONFLICT
     detail = "User already exists"

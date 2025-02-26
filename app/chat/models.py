@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean
 from sqlalchemy.orm import relationship
 from modules.database import Base
 from association.associations import chat_user_association
@@ -13,7 +13,7 @@ class Message(Base):
     chat_id = Column(Integer, ForeignKey('chat.id'), nullable=False)
     text = Column(String, nullable=False)
     sending_date = Column(DateTime)
-    is_read = Column(String, default='False', nullable=False)
+    is_read = Column(Boolean, default='False', nullable=False)
 
     chat = relationship('Chat', back_populates='messages', foreign_keys=[chat_id])
 

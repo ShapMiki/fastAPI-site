@@ -6,6 +6,7 @@ from users.dao import UsersDAO
 
 from exceptions import *
 
+from chat.dao import ChatDAO, MessageDAO
 from chat.service import *
 
 from exceptions import NotFound
@@ -19,12 +20,12 @@ router = APIRouter(
 async def create_chat_api(user_id: int, user: SUser = Depends(get_current_user)):
     second_user = await UsersDAO.find_one_or_none(id=user_id)
     if user and second_user:
-        await create_chat(user, second_user )
+        await ChatDAO.create_chat(user, second_user )
     else:
         return NotFound
 
 
-@router.post("send_message_api/{chat_id}")
+@router.post("/send_message_api/{chat_id}")
 async def send_message_api(chat_id: int, message: str, user: SUser = Depends(get_current_user)):
     if user:
         await send_message(user, chat_id, message)

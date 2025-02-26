@@ -17,7 +17,7 @@ async def get_user_open_sourse(user: SUser = Depends(get_current_user)):
     return data
 
 
-async def get_user_personal_info(user: SUser = Depends(get_current_user)):
+async def get_user_personal_info(user: SUser = Depends(get_current_user), image: bool = True):
     data = {
         "name": user.name,
         "email": user.email,
@@ -27,6 +27,8 @@ async def get_user_personal_info(user: SUser = Depends(get_current_user)):
         'telephone': user.telephone,
         'registered_at': user.registered_at,
         'description': user.description,
-        'image_base64': get_image_base64(f"users/{user.image}")
     }
+    if image:
+        data['image_base64'] = get_image_base64(f"users/{user.image}")
+
     return data

@@ -8,30 +8,67 @@ from users.dao import UsersDAO
 
 from images.service import get_image_base64
 
+from exceptions import *
+
 from datetime import datetime
 
 
-async def create_chat(user1, user2):
-    new_chat = Chat(
-        owners=[user1, user2],
-        create_at = datetime.now()
-    )
-    await ChatDAO.create(new_chat)
 
-async def check_chat_user(user, chat_id):
-    chat = await ChatDAO.find_one_or_none(id=chat_id)
-    if user in chat.owners:
-        return True
+async def check_chat_user(user, chat):
+    if user.id in [owner.id for owner in chat.owners]:
+        raise True
     return False
 
-async def send_message(user, chat, message):
-    chat = await ChatDAO.find_one_or_none(id=chat_id)
+
+async def get_chat_data(user, chat_id):
+    chat = await ChatDAO.get_chat_data(user, chat_id=chat_id)
+    if not chat:
+        raise NotFound()
+    if not check_chat_user(user, chat):
+        raise Forbidden()
+
+    if user.id == chat.owners[0]:
+        secondary_user = chat.owners[1]
+    else:
+        secondary_user = chat.owners[0]
+
+    message_list = []
+    for message in chat.messages:
+        message_list.append({
+                "id": message.id,
+                "owner": message.owner,
+                "text": message.text,
+                "sending_date": message.sending_date,
+                "is_read": message.is_read
+            })
+
+    data = {
+        'id': chat.id,
+        'name': secondary_user.name,
+        'image_base64': get_image_base64(f"users/{secondary_user.image}"),
+        'created_at': chat.create_at,
+        'message_list': message_list
+    }
+    print(data)
+    return data
+
+async def send_message(user, chat_id, message):
+    chat = await ChatDAO.find_one_or_none_with_owners(id=chat_id)
+
+    if not chat:
+        raise NotFound()
+
+    if not check_chat_user(user, chat):
+        raise Fobridden()
+
     if chat:
         new_message = Message(
-            chat=chat,
-            user=user,
-            message=message,
-            create_at=datetime.now()
+            chat_id=chat_id,
+            owner=user.id,
+            text=message,
+            is_read= False,
+            sending_date=datetime.utcnow(),
+            chat=chat
         )
         await ChatDAO.create(new_message)
 

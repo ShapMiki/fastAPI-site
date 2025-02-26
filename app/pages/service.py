@@ -96,14 +96,15 @@ async def get_all_user_data(user: SUser, bool_activ_lots: bool, bool_property_lo
 
 async def get_users_chats_data(user):
     data = {
-        'user_data': await get_user_personal_info(user),
+        'user_data': await get_user_personal_info(user, image=False),
         'chats_data': await ChatDAO.get_chats_list(user)
     }
 
     return data
 
-async def get_users_chat_data(user: SUser, chat_id: int):
+async def get_user_chat_data(user: SUser, chat_id: int):
     data = {
-        'user_data': await get_user_personal_info(user),
-        'chats_data': await ChatDAO.get_chat_info(user, chat_id)
+        'user_data': await get_user_personal_info(user, image=False),
+        'chats_data': await get_chat_data(user, chat_id)
     }
+    return data
