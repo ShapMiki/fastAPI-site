@@ -5,17 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>mainpage</title>
-    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic&amp;display=swap">
-    <link rel="stylesheet" href="../../assets/css/swiper-icons.css">
-    <link rel="stylesheet" href="../../assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="../../assets/css/Banner-Heading-Image-images.css">
-    <link rel="stylesheet" href="../../assets/css/iframe-1.css">
-    <link rel="stylesheet" href="../../assets/css/iframe.css">
-    <link rel="stylesheet" href="../../assets/css/Login-Form-Basic-icons.css">
-    <link rel="stylesheet" href="../../assets/css/Simple-Bootstrap-Chat.css">
-    <link rel="stylesheet" href="../../assets/css/Simple-Slider-swiper-bundle.min.css">
-    <link rel="stylesheet" href="../../assets/css/Simple-Slider.css">
+    <link rel="stylesheet" href="/assets/css/swiper-icons.css">
+    <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/Banner-Heading-Image-images.css">
+    <link rel="stylesheet" href="/assets/css/iframe-1.css">
+    <link rel="stylesheet" href="/assets/css/iframe.css">
+    <link rel="stylesheet" href="/assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="/assets/css/Simple-Bootstrap-Chat.css">
+    <link rel="stylesheet" href="/assets/css/Simple-Slider-swiper-bundle.min.css">
+    <link rel="stylesheet" href="/assets/css/Simple-Slider.css">
 </head>
 
 <body>
@@ -31,10 +31,10 @@
             <div class="row">
                 <div class="col-md-8 col-xl-6 mx-auto p-4" style="border: 1px none var(--bs-info) ;">
                     <div class="d-flex align-items-center align-items-md-start align-items-xl-center" style="border-width: 1px;border-style: solid;padding-left: 18px;border-radius: 10px;min-height: 98px;">
-                        <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center me-4 d-inline-block bs-icon xl"><img style="padding-right: 0px;" width="30" height="40"></div>
+                        <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center me-4 d-inline-block bs-icon xl"><img style="padding-right: 0px;" src="data:image/jpeg;base64,{{ data.chats_data.image_base64 }}" width="30" height="40"></div>
                         <div>
-                            <h4>{{chat.name}}</h4>
-                            <h4 style="font-size: 16px;">last_seance</h4>
+                            <h4>{{data.chats_data.name}}</h4>
+                            <h4 style="font-size: 16px;">{{data.chats_data.last_seance}}</h4>
                         </div>
                     </div>
                 </div>
@@ -51,67 +51,37 @@
     <!-- Chat Box-->
     <div class="col-12 px-0">
       <div class="px-4 py-5 chat-box bg-white">
-        <!-- Sender Message-->
-        <div class="media w-50 mb-3"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
+
+
+
+            {%for message in data.chats_data.message_list%}
+          {%if not message.owner == data.user_data.id %}
+          <!-- Sender Message-->
+        <div class="media w-50 mb-3">
           <div class="media-body ml-3">
             <div class="bg-light rounded py-2 px-3 mb-2">
-              <p class="text-small mb-0 text-muted">Test which is a new approach all solutions</p>
+              <p class="text-small mb-0 text-muted">{{message.text}}</p>
             </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
+            <p class="small text-muted">{{message.sending_date}}</p>
           </div>
         </div>
-
+        {%else%}
         <!-- Reciever Message-->
         <div class="media w-50 ml-auto mb-3">
           <div class="media-body">
             <div class="bg-primary rounded py-2 px-3 mb-2">
-              <p class="text-small mb-0 text-white">Test which is a new approach to have all solutions</p>
+              <p class="text-small mb-0 text-white">{{message.text}}</p>
             </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
+            <p class="small text-muted">{{message.sending_date}}</p>
           </div>
         </div>
+          {%endif%}
+          {%endfor%}
 
-        <!-- Sender Message-->
-        <div class="media w-50 mb-3"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
-          <div class="media-body ml-3">
-            <div class="bg-light rounded py-2 px-3 mb-2">
-              <p class="text-small mb-0 text-muted">Test, which is a new approach to have</p>
-            </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
-          </div>
-        </div>
 
-        <!-- Reciever Message-->
-        <div class="media w-50 ml-auto mb-3">
-          <div class="media-body">
-            <div class="bg-primary rounded py-2 px-3 mb-2">
-              <p class="text-small mb-0 text-white">Apollo University, Delhi, India Test</p>
-            </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
-          </div>
-        </div>
 
-        <!-- Sender Message-->
-        <div class="media w-50 mb-3"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
-          <div class="media-body ml-3">
-            <div class="bg-light rounded py-2 px-3 mb-2">
-              <p class="text-small mb-0 text-muted">Test, which is a new approach</p>
-            </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
-          </div>
-        </div>
 
-        <!-- Reciever Message-->
-        <div class="media w-50 ml-auto mb-3">
-          <div class="media-body">
-            <div class="bg-primary rounded py-2 px-3 mb-2">
-              <p class="text-small mb-0 text-white">Apollo University, Delhi, India Test</p>
-            </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
-          </div>
-        </div>
 
-      </div>
 
       <!-- Typing area -->
       <form action="#" class="bg-light">
@@ -189,11 +159,11 @@
             </div>
         </div>
     </footer>
-    <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/bs-init.js"></script>
-    <script src="../../assets/js/scripts.js"></script>
-    <script src="../../assets/js/Simple-Slider-swiper-bundle.min.js"></script>
-    <script src="../../assets/js/Simple-Slider.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bs-init.js"></script>
+    <script src="/assets/js/scripts.js"></script>
+    <script src="/assets/js/Simple-Slider-swiper-bundle.min.js"></script>
+    <script src="/assets/js/Simple-Slider.js"></script>
 </body>
 
 </html>

@@ -45,6 +45,7 @@ async def get_chat_data(user, chat_id):
     data = {
         'id': chat.id,
         'name': secondary_user.name,
+        "last_seance": secondary_user.last_seance,
         'image_base64': get_image_base64(f"users/{secondary_user.image}"),
         'created_at': chat.create_at,
         'message_list': message_list

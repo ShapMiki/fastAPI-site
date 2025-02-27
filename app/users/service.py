@@ -10,8 +10,10 @@ from images.service import get_image_base64
 
 async def get_user_open_sourse(user: SUser = Depends(get_current_user)):
     data = {
+        "id": user.id,
         "name": user.name,
         "email": user.email,
+        "last_seance": user.last_seance,
         "ballance": user.ballance
     }
     return data
@@ -19,6 +21,7 @@ async def get_user_open_sourse(user: SUser = Depends(get_current_user)):
 
 async def get_user_personal_info(user: SUser = Depends(get_current_user), image: bool = True):
     data = {
+        "id": user.id,
         "name": user.name,
         "email": user.email,
         "ballance": user.ballance,
@@ -26,6 +29,7 @@ async def get_user_personal_info(user: SUser = Depends(get_current_user), image:
         'surname': user.surname,
         'telephone': user.telephone,
         'registered_at': user.registered_at,
+        "last_seance": user.last_seance,
         'description': user.description,
     }
     if image:

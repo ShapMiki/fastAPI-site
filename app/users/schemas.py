@@ -12,6 +12,7 @@ class SUser(BaseModel):
         orm_mode = True
 
 class SUserSecurityChat(BaseModel):
+    id: int
     email: EmailStr
     name: str
     surname: str
@@ -30,6 +31,7 @@ class SUserUpdate(BaseModel):
 
 
 class SUser_personal_info(BaseModel):
+    id: int
     email: EmailStr
     name: str
     surname: str
@@ -47,6 +49,7 @@ class SUser_personal_info(BaseModel):
         orm_mode = True
 
 class SUser_open_sourse(BaseModel):
+    id: int
     email: EmailStr
     name: str
     surname: str
