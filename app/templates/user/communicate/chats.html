@@ -5,13 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>mainpage</title>
-    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic&amp;display=swap">
-    <link rel="stylesheet" href="/assets/css/swiper-icons.css">
-    <link rel="stylesheet" href="/assets/css/Banner-Heading-Image-images.css">
-    <link rel="stylesheet" href="/assets/css/Login-Form-Basic-icons.css">
-    <link rel="stylesheet" href="/assets/css/Simple-Slider-swiper-bundle.min.css">
-    <link rel="stylesheet" href="/assets/css/Simple-Slider.css">
+    <link rel="stylesheet" href="../../assets/css/swiper-icons.css">
+    <link rel="stylesheet" href="../../assets/css/Banner-Heading-Image-images.css">
+    <link rel="stylesheet" href="../../assets/css/iframe-1.css">
+    <link rel="stylesheet" href="../../assets/css/iframe.css">
+    <link rel="stylesheet" href="../../assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="../../assets/css/Simple-Bootstrap-Chat.css">
+    <link rel="stylesheet" href="../../assets/css/Simple-Slider-swiper-bundle.min.css">
+    <link rel="stylesheet" href="../../assets/css/Simple-Slider.css">
 </head>
 
 <body>
@@ -20,7 +23,6 @@
             <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-2" style="position: static;">
                 <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}} р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/actions">Торговать</a></div>
             </div>
-
         </div>
     </nav>
     <section>
@@ -31,7 +33,7 @@
                         <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center me-4 d-inline-block bs-icon xl"><img></div>
                         <div>
                             <h4>{{chat.name}}</h4>
-                            <p>{{chat.last_message}}</p><a href="/pages/open_chat/{{chat.id}}">Открыть чат<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-right">
+                            <p>{{chat.last_message}}</p><a href="/pages/chat/{{chat.id}}">Открыть чат<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-right">
                                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"></path>
                                 </svg></a>
                         </div>
@@ -39,10 +41,30 @@
                 </div>
             </div><code>{%endfor%}</code><code>{%endif%}</code>
         </div>
-        <div class="container"></div>
+        <div class="container">
+            <section class="position-relative py-4 py-xl-5">
+                <div class="container">
+                    <div class="row mb-5">
+                        <div class="col-md-8 col-xl-6 text-center mx-auto">
+                            <p class="w-lg-50"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </section>
     <section>
-        <div class="container"></div>
+        <div class="container">
+            <section class="position-relative py-4 py-xl-5">
+                <div class="container">
+                    <div class="row mb-5">
+                        <div class="col-md-8 col-xl-6 text-center mx-auto">
+                            <p class="w-lg-50"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </section>
     <footer class="text-white bg-dark">
         <div class="container py-4 py-lg-5">
@@ -96,11 +118,11 @@
             </div>
         </div>
     </footer>
-    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/assets/js/bs-init.js"></script>
-    <script src="/assets/js/scripts.js"></script>
-    <script src="/assets/js/Simple-Slider-swiper-bundle.min.js"></script>
-    <script src="/assets/js/Simple-Slider.js"></script>
+    <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/bs-init.js"></script>
+    <script src="../../assets/js/scripts.js"></script>
+    <script src="../../assets/js/Simple-Slider-swiper-bundle.min.js"></script>
+    <script src="../../assets/js/Simple-Slider.js"></script>
 </body>
 
 </html>
