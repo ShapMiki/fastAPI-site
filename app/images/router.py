@@ -86,7 +86,7 @@ async def upload_one_image(image: UploadFile = File(), user: SUser = Depends(get
     localisation_directory = f"{settings.image_scr}/users"
 
     image_extension = image.filename.split('.')[-1]
-    if image_extension not in ["jpg", "jpeg", "png"]:
+    if image_extension not in ["jpg", "jpeg", "png", "JPEG", "JPG"]:
         raise HTTPException(status_code=400, detail="Image must be jpg, jpeg or png")
 
     image_name = f"user_{user.id}.{image_extension}"
