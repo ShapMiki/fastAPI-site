@@ -1,4 +1,4 @@
-from fastapi import APIRouter, WebSocket, Depends
+from fastapi import APIRouter, WebSocket, Depends, HTTPException
 #e
 from users.schemas import SUser, SUserLogin, SUser_personal_info
 from users.dependencies import get_current_user
@@ -30,7 +30,7 @@ async def send_message_api(chat_id: int, message: str, user: SUser = Depends(get
     if user:
         await send_message(user, chat_id, message)
     else:
-        return NotFound
+        raise HTTPException(status_code=403)
 
 
 @router.websocket("/ws/{chat_id}")
