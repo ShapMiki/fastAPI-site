@@ -10,7 +10,7 @@ from chat.models import Chat, Message
 
 from users.models import Users
 
-
+from association.associations import *
 
 class ChatDAO(BaseDAO):
     model = Chat
@@ -25,26 +25,34 @@ class ChatDAO(BaseDAO):
     @classmethod
     async def create_chat(cls, user1, user2):
         async with async_session_maker() as session:
+            # Проверяем, существует ли уже чат между двумя пользователями
+            subquery = (
+                select(chat_user_association.c.chat_id)
+                .where(chat_user_association.c.user_id.in_([user1.id, user2.id]))
+                .group_by(chat_user_association.c.chat_id)
+                .having(func.count(chat_user_association.c.user_id) == 2)
+            ).scalar_subquery()  # ⬅️ Используем scalar_subquery(), чтобы не создавать лишний JOIN
 
-            query = select(Chat).options(selectinload(Chat.owners)).where(
-                Chat.owners.any(id=user1.id),
-                Chat.owners.any(id=user2.id),
-                func.array_length(Chat.owners, 1) == 2
+            query = (
+                select(Chat)
+                .options(selectinload(Chat.owners))
+                .where(Chat.id.in_(subquery))
             )
-            existing_chat = await session.execute(query)
-            existing_chat = existing_chat.scalar_one_or_none()
+
+            result = await session.execute(query)
+            existing_chat = result.scalar_one_or_none()
 
             if existing_chat:
                 return existing_chat
 
+            # Если чат не найден, создаем новый
             new_chat = Chat(
                 owners=[user1, user2],
                 create_at=datetime.utcnow()
             )
-            await session.add(new_chat)
+            session.add(new_chat)
             await session.commit()
             return new_chat
-
 
     @classmethod
     async def get_chats_list(cls, user):

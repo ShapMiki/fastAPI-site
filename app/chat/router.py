@@ -8,6 +8,7 @@ from exceptions import *
 
 from chat.dao import ChatDAO, MessageDAO
 from chat.service import *
+from chat.schemas import *
 
 from exceptions import NotFound
 
@@ -26,7 +27,11 @@ async def create_chat_api(user_id: int, user: SUser = Depends(get_current_user))
 
 
 @router.post("/send_message_api/{chat_id}")
-async def send_message_api(chat_id: int, message: str, user: SUser = Depends(get_current_user)):
+async def send_message_api(chat_id, message : SMessage, user: SUser = Depends(get_current_user)):
+    chat_id = int(chat_id)
+    message = message.message
+    if not message:
+        raise HTTPException(status_code=400, detail="Message is empty")
     if user:
         await send_message(user, chat_id, message)
     else:

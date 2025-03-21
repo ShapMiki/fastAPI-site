@@ -16,6 +16,8 @@ class SChat(BaseModel):
         orm_mode = True
 
 
+class SMessage(BaseModel):
+    message: str
 
 class SMessages(BaseModel):
     id: int

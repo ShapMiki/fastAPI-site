@@ -8,9 +8,10 @@ from users.dao import UsersDAO
 
 from images.service import get_image_base64
 
+from config import settings
 from exceptions import *
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 
@@ -27,7 +28,7 @@ async def get_chat_data(user, chat_id):
     if not check_chat_user(user, chat):
         raise Forbidden()
 
-    if user.id == chat.owners[0]:
+    if user.id != chat.owners[0]:
         secondary_user = chat.owners[1]
     else:
         secondary_user = chat.owners[0]
@@ -38,19 +39,19 @@ async def get_chat_data(user, chat_id):
                 "id": message.id,
                 "owner": message.owner,
                 "text": message.text,
-                "sending_date": message.sending_date,
+                "sending_date": (message.sending_date + timedelta(hours=settings.hour_zone)).strftime("%d.%m.%Y %H:%M"),
                 "is_read": message.is_read
             })
 
     data = {
         'id': chat.id,
         'name': secondary_user.name,
-        "last_seance": secondary_user.last_seance,
+        "last_seance": (secondary_user.last_seance  + timedelta(hours=settings.hour_zone)).strftime("%d.%m.%Y %H:%M"),
         'image_base64': get_image_base64(f"users/{secondary_user.image}"),
         'created_at': chat.create_at,
         'message_list': message_list
     }
-    print(data)
+
     return data
 
 async def send_message(user, chat_id, message):

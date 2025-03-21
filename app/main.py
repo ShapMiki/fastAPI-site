@@ -13,7 +13,7 @@ from config import settings
 from scheduler import Scheduler
 
 #uvicorn app.main:app --reload
-#uvicorn app.main:app --host  87.252.252.226 --port 3333 --reload
+#uvicorn app.main:app --host  87.252.252.226 --port 80 --reload
 
 
 
