@@ -1,3 +1,16 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("RateForm");
+    const input = form.querySelector("input[name='message']");
+    const button = document.getElementById("button-addon2");
+
+    input.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Отменяем стандартное поведение Enter
+            button.click(); // Имитируем клик по кнопке
+        }
+    });
+});
+
 
 async function submitForm_and_foto() {
     // Останавливаем стандартное поведение формы
@@ -66,6 +79,27 @@ async function submitForm_and_foto() {
 }
 //
 
+function startChat(userId) {
+    fetch(`/chat/create_chat_api/${userId}`, { 
+        method: "GET"
+    })
+    .then(response => response.json()) // Ожидаем JSON-ответ
+    .then(data => {
+        if (data.chat_id) {
+            window.location.href = `/pages/chat/${data.chat_id}`; // Перенаправление
+        } else {
+            alert("Ошибка: не удалось создать чат.");
+        }
+    })
+    .catch(error => {
+        console.error("Ошибка запроса:", error);
+        alert("Ошибка подключения к серверу.");
+    });
+}
+
+
+//
+
 
 let selectedFiles = [];
 
@@ -79,7 +113,6 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         selectedFiles.push(files[i]);
     }
 });
-
 
 async function fetchUploadCarLot(event) {
     event.preventDefault(); // Останавливаем стандартное поведение формы
@@ -111,45 +144,43 @@ async function fetchUploadCarLot(event) {
             throw new Error(`Ошибка при отправке JSON данных: ${jsonResponse.statusText}`);
         }
 
-        const jsonResult = await jsonResponse.json();
-        const carId = jsonResult.car_id;
-
-        console.log('JSON данные успешно отправлены:', jsonResult);
-
-        // Отправка файлов изображений, если они есть
-        if (imageFiles.length > 0) {
-            const imageFormData = new FormData();
-            imageFiles.forEach((file, index) => {
-                imageFormData.append(`image${index}`, file);
-            });
-
-            try {
-                const imageResponse = await fetch(`/images/upload_car_images/${carId}`, {
-                    method: 'POST',
-                    body: imageFormData,
-                });
-
-                if (!imageResponse.ok) {
-                    throw new Error(`Ошибка при отправке файлов изображений: ${imageResponse.statusText}`);
-                }
-
-                console.log('Файлы изображений успешно отправлены:', await imageResponse.json());
-            } catch (error) {
-                console.error('Ошибка при отправке файлов изображений:', error);
-                alert('Не удалось отправить изображения. Попробуйте снова.');
-                return;
-            }
-        } else {
-            console.log('Файлы изображений отсутствуют, отправка пропущена.');
-        }
-
-        // Если все данные успешно отправлены
-        console.log('Все данные успешно отправлены!');
-        window.location.href = '/pages/personal_account';
+        console.log('JSON данные успешно отправлены:', await jsonResponse.json());
     } catch (error) {
         console.error('Ошибка при отправке JSON данных:', error);
         alert('Не удалось отправить данные лота. Попробуйте снова.');
+        return; // Прерываем выполнение, если отправка JSON завершилась с ошибкой
     }
+
+    // Отправка файлов изображений, если они есть
+    if (imageFiles.length > 0) {
+        const imageFormData = new FormData();
+        imageFiles.forEach((file, index) => {
+            imageFormData.append(`image${index}`, file);
+        });
+
+        try {
+            const imageResponse = await fetch('/images/upload_car_images', {
+                method: 'POST',
+                body: imageFormData,
+            });
+
+            if (!imageResponse.ok) {
+                throw new Error(`Ошибка при отправке файлов изображений: ${imageResponse.statusText}`);
+            }
+
+            console.log('Файлы изображений успешно отправлены:', await imageResponse.json());
+        } catch (error) {
+            console.error('Ошибка при отправке файлов изображений:', error);
+            alert('Не удалось отправить изображения. Попробуйте снова.');
+            return;
+        }
+    } else {
+        console.log('Файлы изображений отсутствуют, отправка пропущена.');
+    }
+
+    // Если все данные успешно отправлены
+    console.log('Все данные успешно отправлены!');
+    //window.location.href = '/pages/personal_account';
 }
 
 

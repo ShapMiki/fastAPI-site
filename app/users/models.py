@@ -37,7 +37,7 @@ class Users(Base):
     verefy_passport = Column(String, default='False', nullable=False)
 
     ballance = Column(Double, default=0,  nullable=False)
-    image = Column(String, default='none_user_photo.jpg')
+    image = Column(String, default='none_user_photo.png')
 
     chats = relationship('Chat', secondary=chat_user_association, back_populates='owners')
 

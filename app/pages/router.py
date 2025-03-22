@@ -101,6 +101,21 @@ async def property_lot_page(lot_id: int, request: Request, responce: Response, u
 
 
 
+@router.get('/stranger_account/{user_id}')
+async def stranger_account(user_id: int, request: Request, responce: Response, user: SUser = Depends(get_current_user)):
+
+    if not user:
+        return RedirectResponse(url="/pages/login")
+
+    data = await get_all_user_data(user,False, False)
+    user_opensource_data = await get_stranger_data(user_id)
+
+    if not user_opensource_data:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    data['stranger'] = user_opensource_data
+
+    return templates.TemplateResponse("user/communicate/stranger_personal_account_page.html", {"request": request, "data": data})
 
 
 @router.get('/personal_account')
@@ -135,6 +150,7 @@ async def load_up_ballance_page(request: Request, user: SUser = Depends(get_curr
 
     return templates.TemplateResponse("other/payments_page.html", {"request": request, "data": data})
 
+
 @router.get("/chats")
 async def load_chats_page(request: Request, user = Depends(get_current_user)):
 
@@ -142,7 +158,7 @@ async def load_chats_page(request: Request, user = Depends(get_current_user)):
         return RedirectResponse(url="/pages/login")
 
     data = await get_users_chats_data(user)
-    print(data)
+
     return templates.TemplateResponse("user/communicate/chats.html", {"request": request, "data": data})
 
 

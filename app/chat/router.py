@@ -17,11 +17,15 @@ router = APIRouter(
     tags=["chat"],
 )
 
-@router.post("/create_chat_api/{user_id}")
+@router.get("/create_chat_api/{user_id}")
 async def create_chat_api(user_id: int, user: SUser = Depends(get_current_user)):
     second_user = await UsersDAO.find_one_or_none(id=user_id)
-    if user and second_user:
-        await ChatDAO.create_chat(user, second_user )
+    if user and second_user and user.id != second_user.id:
+        chat = await ChatDAO.create_chat(user, second_user )
+        data = {
+            'chat_id': chat.id
+        }
+        return data
     else:
         return NotFound
 

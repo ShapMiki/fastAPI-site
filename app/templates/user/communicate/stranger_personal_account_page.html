@@ -19,13 +19,13 @@
 
 <body>
     <nav class="navbar navbar-expand bg-light">
-        <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"></button>
-            <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-2" style="position: static;">
-                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}} р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/actions">Торговать</a></div>
+        <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"></button>
+            <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-1" style="position: static;">
+                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}}р.</a><a class="btn" role="button" href="/pages/actions" style="width: max-content;padding-right: 4px;padding-left: 4px;margin-right: 3px;"><img src="/assets/img/activ_page_icon.png"></a><a class="btn" role="button" href="/pages/chats" style="width: max-content;padding-right: 4px;padding-left: 4px;margin-right: 3px;"><img src="/assets/img/chat_icon.png"></a><a class="btn" role="button" href="/pages/personal_account" style="width: max-content;padding-right: 4px;padding-left: 4px;margin-left: 0px;margin-right: 10px;"><img src="/assets/img/user_icon.png" width="32" height="32"></a></div>
             </div>
         </div>
     </nav>
-    <section class="position-relative py-4 py-xl-5">
+    <section class="position-relative py-4 py-xl-5" style="height: min-content;">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
@@ -34,14 +34,14 @@
             </div>
         </div>
     </section>
-    <section class="position-relative py-4 py-xl-5" style="padding-left: 0px;display: inline-block;">
+    <section class="position-relative py-4 py-xl-5" style="padding-left: 0px;display: inline-block;height: min-content;">
         <div class="container d-lg-flex d-xl-flex d-xxl-flex" style="display: inline-block;width: 947px;margin-right: 0px;padding: 0px;margin-left: 60px;margin-bottom: 0px;">
             <div style="width: 323px;"><img width="300" height="300" style="width: 300px;height: 300px;margin-right: 0px;" src="data:image/jpeg;base64,{{ data.stranger.user_data.image_base64 }}"></div>
-            <div style="padding-left: 0px;display: grid;width: 502px;"><strong style="font-size: 30px;display: block;width: 411px;">Информация:</strong><strong>Имя: {{data.stranger.user_data.name}}</strong><strong>Фамилия: {{data.stranger.user_data.surname}}</strong><strong>Email: {{data.stranger.user_data.email}}</strong><strong>Номер телефона: {{data.stranger.user_data.telephone}}</strong><a class="btn btn-primary" role="button" style="margin: 0px;margin-right: 0px;background: var(--bs-gray-500);max-width: 200px;max-height: 46px;" href="/auth/chat_api/{{data.stranger.user_data.id}}">Начать чат</a></div>
+            <div style="padding-left: 0px;display: grid;width: 502px;"><strong style="font-size: 30px;display: block;width: 411px;">Информация:</strong><strong>Имя: {{data.stranger.user_data.name}}</strong><strong>Фамилия: {{data.stranger.user_data.surname}}</strong><strong>Email: {{data.stranger.user_data.email}}</strong><strong>Номер телефона: {{data.stranger.user_data.telephone}}</strong><a class="btn btn-primary" role="button" id="start-chat-btn" style="margin: 0px;margin-right: 0px;background: var(--bs-blue);max-width: 200px;height: 30px;width: 117px;padding-top: 0px;" onclick="startChat(&#39;{{data.stranger.user_data.id}}&#39;)">Начать чат</a></div>
             <div style="display: inline-flex;"></div>
         </div>
     </section>
-    <section class="position-relative py-4 py-xl-5">
+    <section class="position-relative py-4 py-xl-5" style="height: min-content;">
         <div class="container">
             <div class="row mb-5">
                 <div class="col"><strong>Описание: {{data.stranger.user_data.description}}</strong></div>
@@ -51,7 +51,7 @@
             </div>
         </div>
     </section>
-    <section class="py-4 py-xl-5">
+    <section class="py-4 py-xl-5" style="height: min-content;">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
@@ -78,7 +78,7 @@
             </div>
         </div><code>{% endfor %}</code><code>{% else %}</code><strong>Нет активных лотов(</strong><code>{% endif %}</code>
     </section>
-    <section class="py-4 py-xl-5">
+    <section class="py-4 py-xl-5" style="height: min-content;">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
@@ -95,7 +95,7 @@
                             <p class="mb-4">{{locdata.description}}</p>
                             <div class="my-3 pb-0 mb-1" style="display: flex;width: 571px;height: 51px;"></div>
                             <div class="my-3 pb-0 mb-1" style="display: inline-grid;height: 51px;width: auto;">
-                                <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;height: 51px;margin-right: 0px;"><strong>Цена: {{locdata.price}}</strong></div><a class="btn btn-primary btn-lg" role="button" href="/pages/activ_lot_page/{{locdata.id}}" style="max-width: 182px;margin-top: 40px;">Перейти</a>
+                                <div class="d-grid justify-content-start my-3 pb-0 mb-1" style="display: grid;height: 51px;margin-right: 0px;"><strong>Цена: {{locdata.price}}</strong></div><a class="btn btn-primary btn-lg" role="button" href="/pages/property_lot_page/{{locdata.id}}" style="max-width: 182px;margin-top: 40px;">Перейти</a>
                                 <div style="margin-top: 27px;"></div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
             </div>
         </div><code>{% endfor %}</code><code>{% else %}</code><strong>Нет активных лотов(</strong><code>{% endif%}</code>
     </section>
-    <section class="position-relative py-4 py-xl-5">
+    <section class="position-relative py-4 py-xl-5" style="height: min-content;">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">

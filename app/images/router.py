@@ -93,7 +93,7 @@ async def upload_one_image(image: UploadFile = File(), user: SUser = Depends(get
 
     file_path = f"{localisation_directory}/{image_name}"
 
-    if not user.image == "none_user_photo.jpg":
+    if not user.image == "none_user_photo.png":
         os.remove(f"{localisation_directory}/{user.image}")
 
     with open(file_path, "wb") as buffer:

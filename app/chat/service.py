@@ -28,10 +28,11 @@ async def get_chat_data(user, chat_id):
     if not check_chat_user(user, chat):
         raise Forbidden()
 
-    if user.id != chat.owners[0]:
-        secondary_user = chat.owners[1]
-    else:
-        secondary_user = chat.owners[0]
+    #if user.id == chat.owners[0]:
+       # secondary_user = chat.owners[1]
+    #else:
+     #   secondary_user = chat.owners[0]
+    secondary_user = next(u for u in chat.owners if u.id != user.id)
 
     message_list = []
     for message in chat.messages:
@@ -39,14 +40,14 @@ async def get_chat_data(user, chat_id):
                 "id": message.id,
                 "owner": message.owner,
                 "text": message.text,
-                "sending_date": (message.sending_date + timedelta(hours=settings.hour_zone)).strftime("%d.%m.%Y %H:%M"),
+                "sending_date": (message.sending_date + timedelta(hours=settings.hour_zone)).strftime("%H:%M %d.%m.%Y"),
                 "is_read": message.is_read
             })
 
     data = {
         'id': chat.id,
         'name': secondary_user.name,
-        "last_seance": (secondary_user.last_seance  + timedelta(hours=settings.hour_zone)).strftime("%d.%m.%Y %H:%M"),
+        "last_seance": (secondary_user.last_seance  + timedelta(hours=settings.hour_zone)).strftime("%H:%M %d.%m.%Y"),
         'image_base64': get_image_base64(f"users/{secondary_user.image}"),
         'created_at': chat.create_at,
         'message_list': message_list

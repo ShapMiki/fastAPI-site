@@ -15,22 +15,23 @@
     <link rel="stylesheet" href="/assets/css/Simple-Bootstrap-Chat.css">
     <link rel="stylesheet" href="/assets/css/Simple-Slider-swiper-bundle.min.css">
     <link rel="stylesheet" href="/assets/css/Simple-Slider.css">
+    <link rel="stylesheet" href="/static/css/chat.css">
 </head>
 
 <body>
     <nav class="navbar navbar-expand bg-light">
-        <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"></button>
-            <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-2" style="position: static;">
-                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}} р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/actions">Торговать</a></div>
+        <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"></button>
+            <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-1" style="position: static;">
+                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}}р.</a><a class="btn" role="button" href="/pages/actions" style="width: max-content;padding-right: 4px;padding-left: 4px;margin-right: 3px;"><img src="/assets/img/activ_page_icon.png"></a><a class="btn" role="button" href="/pages/chats" style="width: max-content;padding-right: 4px;padding-left: 4px;margin-right: 3px;"><img src="/assets/img/chat_icon.png"></a><a class="btn" role="button" href="/pages/personal_account" style="width: max-content;padding-right: 4px;padding-left: 4px;margin-left: 0px;margin-right: 10px;"><img src="/assets/img/user_icon.png" width="32" height="32"></a></div>
             </div>
         </div>
     </nav>
-    <section>
+    <section style="height: min-content;">
         <div class="container py-4 py-xl-5"><code>{% if data.chats_data %}</code><code>{% for chat in data.chats_data %}</code>
             <div class="row">
                 <div class="col-md-8 col-xl-6 mx-auto p-4">
                     <div class="d-flex align-items-center align-items-md-start align-items-xl-center">
-                        <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center me-4 d-inline-block bs-icon xl"><img></div>
+                        <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center me-4 d-inline-block bs-icon xl"><img class="profile-pic" src="data:image/jpeg;base64,{{ chat.image_base64 }}" /></div>
                         <div>
                             <h4>{{chat.name}}</h4>
                             <p>{{chat.last_message}}</p><a href="/pages/chat/{{chat.id}}">Открыть чат<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-right">
@@ -53,7 +54,7 @@
             </section>
         </div>
     </section>
-    <section>
+    <section style="height: min-content;">
         <div class="container">
             <section class="position-relative py-4 py-xl-5">
                 <div class="container">

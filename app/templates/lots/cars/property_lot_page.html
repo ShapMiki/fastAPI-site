@@ -21,11 +21,11 @@
     <nav class="navbar navbar-expand bg-light">
         <div class="container"><a class="navbar-brand" href="/pages">Asssity</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"></button>
             <div class="collapse navbar-collapse justify-content-end align-items-end align-content-end" id="navcol-1" style="position: static;">
-                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}}р.</a><a class="btn btn-primary ms-auto" role="button" href="/pages/personal_account">Личный кабинет</a></div>
+                <div><a class="btn btn-primary ms-auto" role="button" href="/pages/up_ballance" style="background: var(--bs-teal);transform: translateX(0px);position: static;filter: blur(0px) hue-rotate(0deg) invert(0%);padding-right: 15px;margin-right: 43px;">Баланс: {{data.user_data.ballance}}р.</a><a class="btn" role="button" href="/pages/actions" style="width: max-content;padding-right: 4px;padding-left: 4px;margin-right: 3px;"><img src="/assets/img/activ_page_icon.png"></a><a class="btn" role="button" href="/pages/chats" style="width: max-content;padding-right: 4px;padding-left: 4px;margin-right: 3px;"><img src="/assets/img/chat_icon.png"></a><a class="btn" role="button" href="/pages/personal_account" style="width: max-content;padding-right: 4px;padding-left: 4px;margin-left: 0px;margin-right: 10px;"><img src="/assets/img/user_icon.png" width="32" height="32"></a></div>
             </div>
         </div>
     </nav>
-    <section class="position-relative py-4 py-xl-5">
+    <section class="position-relative py-4 py-xl-5" style="height: min-content;">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
@@ -34,7 +34,7 @@
             </div>
         </div>
     </section>
-    <section class="position-relative py-4 py-xl-5">
+    <section class="position-relative py-4 py-xl-5" style="height: min-content;">
         <div class="container">
             <div class="row mb-5">
                 <div class="col"><strong style="font-size: 31px;">Лот {{data.property_lot_data.id}}</strong></div>
@@ -60,7 +60,7 @@
             </div>
         </div>
     </section>
-    <section class="position-relative py-4 py-xl-5">
+    <section class="position-relative py-4 py-xl-5" style="height: min-content;">
         <div class="container">
             <div style="display: grid;margin-left: 40px;margin-bottom: 40px;"><strong style="font-size: 20px;margin-bottom: 10px;">Марка:<small><strong>&nbsp;{{data.property_lot_data.brand}}</strong></small></strong><strong style="font-size: 20px;margin-bottom: 10px;">Модель:<small><strong>&nbsp;{{data.property_lot_data.model}}</strong></small></strong><strong style="font-size: 20px;">Кузов:&nbsp;<small><strong>&nbsp;{{data.property_lot_data.body}}</strong></small></strong></div>
             <div class="d-grid d-print-grid d-sm-grid d-md-grid d-lg-flex d-xl-flex d-xxl-flex" style="margin-left: 40px;">
@@ -69,8 +69,8 @@
             </div>
         </div>
     </section>
-    <div class="container" style="display: grid;margin-bottom: 20px;"><strong style="font-size: 20px;margin-bottom: 0px;">Описание:</strong><small><strong>&nbsp;{{data.property_lot_data.description}}</strong></small></div>
-    <section class="position-relative py-4 py-xl-5">
+    <div class="container" style="display: grid;margin-bottom: 20px;height: min-content;"><strong style="font-size: 20px;margin-bottom: 0px;">Описание:</strong><small><strong>&nbsp;{{data.property_lot_data.description}}</strong></small></div>
+    <section class="position-relative py-4 py-xl-5" style="height: min-content;">
         <div class="container">
             <div class="d-flex" style="margin-left: 40px;">
                 <div class="d-grid"><strong style="font-size: 20px;margin-bottom: 0px;width: 657.047px;display: block;">Цена:&nbsp;<small><strong>&nbsp;{{data.property_lot_data.price}}</strong></small></strong></div>
@@ -81,7 +81,7 @@
             <div></div>
         </div>
     </section>
-    <section class="position-relative py-4 py-xl-5">
+    <section class="position-relative py-4 py-xl-5" style="height: min-content;">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">

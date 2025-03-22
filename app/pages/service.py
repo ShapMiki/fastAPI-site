@@ -4,7 +4,7 @@ from cars.dao import ActivCarsDAO, PropertyCarsDAO
 from cars.service import *
 
 from users.dao import UsersDAO
-from users.service import get_user_personal_info
+from users.service import get_user_personal_info, get_user_open_sourse
 
 from chat.dao import *
 from chat.service import *
@@ -36,6 +36,7 @@ async def get_activ_lot_info(user: SUser, lot_id: int)->dict:
         owner = await UsersDAO.find_one_or_none(id=activ_lot_data['owner'])
         another_data = {
             'owner': f"{owner.name} {owner.surname}",
+            'owner_id': owner.id
         }
 
     else:
@@ -106,5 +107,19 @@ async def get_user_chat_data(user: SUser, chat_id: int):
     data = {
         'user_data': await get_user_personal_info(user, image=False),
         'chats_data': await get_chat_data(user, chat_id)
+    }
+    return data
+
+async def get_stranger_data(user_id: int):
+
+    user_opensource_data =  await get_user_open_sourse(user_id)
+
+    if not user_opensource_data:
+        return None
+
+    data = {
+        'user_data': user_opensource_data,
+        'activ_lot_data': await get_activ_data_list(owner=user_id),
+        'property_lot_data': await get_property_data_list(owner=user_id)
     }
     return data
