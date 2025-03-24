@@ -6,6 +6,7 @@ from pages.service import *
 
 from users.schemas import SUser, SUserLogin, SUser_personal_info
 from users.dependencies import get_current_user
+from users.service import update_jwt_and_last_seance
 
 from cars.dao import ActivCarsDAO, PropertyCarsDAO
 
@@ -25,14 +26,20 @@ async def show_index(request: Request, user: SUser = Depends(get_current_user)):
 
     if user:
         data = await get_all_data(user, False, False)
+        response = templates.TemplateResponse("index.html", {"request": request, 'data': data})
+        response = await update_jwt_and_last_seance(response, user)
+
+
     else:
         data = {
             'user_data': None,
             'activ_lot_data': None,
             'property_data': None
         }
+        response = templates.TemplateResponse("index.html", {"request": request, 'data': data})
 
-    return templates.TemplateResponse("index.html", {"request": request, 'data': data})
+    return response
+
 
 
 @router.get('/registrate')
@@ -56,8 +63,9 @@ async def load_action_page(request: Request, responce: Response, user: SUser = D
 
     data = await get_all_data(user, True, False)
 
-    return templates.TemplateResponse("lots/action_page.html", {"request": request, "data": data})
-
+    response = templates.TemplateResponse("lots/action_page.html", {"request": request, "data": data})
+    response = await update_jwt_and_last_seance(response, user)
+    return response
 
 
 
@@ -125,8 +133,9 @@ async def  load_personal_account(request: Request, responce: Response, user: SUs
 
     data = await get_all_user_data(user, True, True)
 
-    return templates.TemplateResponse("user/personal_account_page.html", {"request": request, "data": data})
-
+    response = templates.TemplateResponse("user/personal_account_page.html", {"request": request, "data": data})
+    response = await update_jwt_and_last_seance(response, user)
+    return response
 
 @router.get('/change_info_about_me')
 async def change_info_about_me(request: Request, responce: Response, user: SUser_personal_info = Depends(get_current_user)):
@@ -137,7 +146,9 @@ async def change_info_about_me(request: Request, responce: Response, user: SUser
     data = await get_all_user_data(user, False, False)
 
 
-    return templates.TemplateResponse("user/change_info_about_me_page.html", {"request": request, "data": data})
+    response = templates.TemplateResponse("user/change_info_about_me_page.html", {"request": request, "data": data})
+    response = await update_jwt_and_last_seance(response, user)
+    return response
 
 
 @router.get("/up_ballance")
@@ -159,7 +170,9 @@ async def load_chats_page(request: Request, user = Depends(get_current_user)):
 
     data = await get_users_chats_data(user)
 
-    return templates.TemplateResponse("user/communicate/chats.html", {"request": request, "data": data})
+    response = templates.TemplateResponse("user/communicate/chats.html", {"request": request, "data": data})
+    response = await update_jwt_and_last_seance(response, user)
+    return response
 
 
 @router.get("/chat/{chat_id}")
@@ -168,7 +181,9 @@ async def load_chat_page(chat_id: int, request: Request, user: SUser = Depends(g
         return RedirectResponse(url="/pages/login")
 
     data = await get_user_chat_data(user, chat_id)
-    return templates.TemplateResponse("user/communicate/chat_page.html", {"request": request, "data": data})
+    response = templates.TemplateResponse("user/communicate/chat_page.html", {"request": request, "data": data})
+    response = await update_jwt_and_last_seance(response, user)
+    return response
 
 """
 @router.get('/main/{id}')

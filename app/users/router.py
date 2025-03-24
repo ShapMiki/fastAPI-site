@@ -45,7 +45,7 @@ async def login(responce: Response, user_data: SUserLogin):
         raise IncorrectEmailOrPassword
 
     access_token = create_access_token(data={"sub": str(user.id)})
-    responce.set_cookie(key="user_access_token", value=access_token, httponly=True)
+    responce.set_cookie(key="user_access_token", value=access_token, httponly=True, max_age=259200)
 
 
 @router.post("/logout_api")
